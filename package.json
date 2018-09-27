@@ -7,9 +7,13 @@
     "build": "umi build",
     "serve": "node ./server/index.js",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
-    "precommit": "lint-staged",
-    "commitmsg": "commitlint -E GIT_PARAMS"
+    "deploy": "gh-pages -d dist"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
     "*.js": "eslint --max-warnings=0 --ignore-pattern !.umirc.js"
@@ -25,6 +29,7 @@
     "lodash": "^4.17.11",
     "moment": "^2.22.2",
     "path-to-regexp": "^2.4.0",
+    "react-ace": "^6.2.0",
     "react-helmet": "^5.2.0"
   },
   "devDependencies": {
