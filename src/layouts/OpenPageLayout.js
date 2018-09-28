@@ -45,7 +45,7 @@ function OpenPageLayout(props) {
         </Layout.Header>
         <Layout className={styles.main}>
           <Layout.Sider width={300} style={{ background: '#fff' }}>
-            <Menu mode="inline" defaultSelectedKeys={[locationPathname]} style={{ height: '100%', borderRight: 0 }}>
+            <Menu mode="inline" selectedKeys={[locationPathname]} style={{ height: '100%', borderRight: 0 }}>
               {routes.map(r => {
                 return (
                   <Menu.Item key={r.path}>
