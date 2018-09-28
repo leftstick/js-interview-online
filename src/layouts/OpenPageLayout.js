@@ -4,6 +4,8 @@ import { connect } from 'dva'
 import { Layout, Menu } from 'antd'
 import { Helmet } from 'react-helmet'
 import { withRouter } from 'dva/router'
+import Link from 'umi/link'
+import Redirect from 'umi/redirect'
 
 import { destoryGlobalSpinner } from '../helpers/view'
 import { routes } from '../helpers/exam'
@@ -14,9 +16,21 @@ import logoSrc from '../assets/logo.png'
 import styles from './OpenPageLayout.less'
 
 function OpenPageLayout(props) {
-  const { pageTitle, children } = props
+  const { pageTitle, children, locationPathname } = props
+
+  if (locationPathname !== '/' && routes.every(r => r.path !== locationPathname)) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/exam1'
+        }}
+      />
+    )
+  }
 
   destoryGlobalSpinner()
+
+  console.log(locationPathname)
 
   return (
     <React.Fragment>
@@ -31,16 +45,11 @@ function OpenPageLayout(props) {
         </Layout.Header>
         <Layout className={styles.main}>
           <Layout.Sider width={300} style={{ background: '#fff' }}>
-            <Menu
-              mode="inline"
-              defaultSelectedKeys={['1']}
-              defaultOpenKeys={['sub1']}
-              style={{ height: '100%', borderRight: 0 }}
-            >
+            <Menu mode="inline" defaultSelectedKeys={[locationPathname]} style={{ height: '100%', borderRight: 0 }}>
               {routes.map(r => {
                 return (
                   <Menu.Item key={r.path}>
-                    <span>{r.title}</span>
+                    <Link to={r.path}>{r.title}</Link>
                   </Menu.Item>
                 )
               })}
@@ -57,13 +66,15 @@ function OpenPageLayout(props) {
 
 OpenPageLayout.propTypes = {
   pageTitle: PropTypes.string,
-  children: PropTypes.any
+  children: PropTypes.any,
+  locationPathname: PropTypes.string
 }
 
 export default withRouter(
   connect(({ app }) => {
     return {
-      pageTitle: app.pageTitle
+      pageTitle: app.pageTitle,
+      locationPathname: app.locationPathname
     }
   })(OpenPageLayout)
 )

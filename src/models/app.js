@@ -11,7 +11,8 @@ export default extend(commonModel, {
     locationPathname: '',
     locationQuery: {},
     pageTitle: 'javascript 小测验',
-    screenWidth: window.innerWidth
+    screenWidth: window.innerWidth,
+    screenHeight: window.innerHeight
   },
   subscriptions: {
     setHistory({ dispatch, history }) {
@@ -27,11 +28,12 @@ export default extend(commonModel, {
     },
     screenResize({ dispatch, history }) {
       const screenResizeHandler = () => {
-        const { innerWidth } = window
+        const { innerWidth, innerHeight } = window
         dispatch({
           type: 'updateState',
           payload: {
-            screenWidth: innerWidth
+            screenWidth: innerWidth,
+            screenHeight: innerHeight
           }
         })
       }

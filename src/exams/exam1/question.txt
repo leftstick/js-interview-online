@@ -8,7 +8,8 @@
  *  isString(null)                 = false
  *  isString(new String('hello'))  = true
  *
+ *
  **/
 function isString(value) {
-  // 这里实现
+    //在这里实现
 }

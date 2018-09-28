@@ -24,6 +24,7 @@
     ]
   },
   "dependencies": {
+    "assert": "^1.4.1",
     "classnames": "^2.2.6",
     "dva-model-extend": "^0.1.2",
     "lodash": "^4.17.11",
