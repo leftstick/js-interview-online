@@ -1,6 +1,7 @@
 export default {
   hash: true,
   theme: './src/themes/index.js',
+  history: 'hash',
   plugins: [
     [
       'umi-plugin-react',
