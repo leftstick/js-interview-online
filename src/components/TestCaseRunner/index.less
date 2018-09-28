@@ -1,6 +1,5 @@
 .container {
   width: 600px;
-  height: 100%;
   position: absolute;
   padding: 35px 5px 5px 5px;
   top: 0;
@@ -8,6 +7,10 @@
   z-index: 11;
   background-color: #fff;
   box-shadow: -3px 0px 2px rgb(212, 212, 212);
+}
+
+.innerContainer {
+  overflow-y: auto;
 }
 
 .closeBtn {
@@ -23,12 +26,28 @@
   color: rgb(122, 122, 255);
 }
 
+.runBtn {
+  position: absolute;
+  cursor: pointer;
+  font-size: 19px;
+  top: 5px;
+  left: 35px;
+  color: rgb(68, 247, 68);
+}
+
 .caseContainer {
   width: 100%;
-  height: 90px;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #edeced;
   margin-top: 5px;
+}
+
+.execFailed {
+  border: 1px solid red;
+}
+
+.execSuccess {
+  border: 1px solid rgb(76, 248, 76);
 }

@@ -30,8 +30,6 @@ function OpenPageLayout(props) {
 
   destoryGlobalSpinner()
 
-  console.log(locationPathname)
-
   return (
     <React.Fragment>
       <Helmet>

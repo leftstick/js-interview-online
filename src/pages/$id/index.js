@@ -5,7 +5,6 @@ import { connect } from 'dva'
 import { message, Button } from 'antd'
 
 import { routes } from '../../helpers/exam'
-import CaseRunner from './components/CaseRunner'
 
 import styles from './index.less'
 
@@ -20,11 +19,15 @@ class Exam extends React.Component {
     super(props)
 
     this.state = {
-      visible: false
+      visible: false,
+      code: ''
     }
   }
 
   _onCodeChange = (code, regex) => {
+    this.setState({
+      code
+    })
     const isValid = regex.test(code)
     if (!isValid) {
       message.warn('不可以篡改题目哦')
@@ -45,20 +48,24 @@ class Exam extends React.Component {
     }
 
     const Content = route.content
+    const CaseRunner = route.testCase
+
+    const containerHeight = screenHeight - 64 - 10
 
     return (
-      <div className={styles.content} style={{ height: `${screenHeight - 64 - 10}px` }} ref={this.container}>
+      <div className={styles.content} style={{ height: `${containerHeight}px` }} ref={this.container}>
         <Button
           shape="circle"
           icon="eye"
           className={styles.verifyBtn}
           onClick={() => this.setState({ visible: true })}
         />
-        <Content onChange={code => this._onCodeChange(code, route.contentRegex)} />
+        <Content value={this.state.code} onChange={code => this._onCodeChange(code, route.contentRegex)} />
         <CaseRunner
           visible={this.state.visible}
           onClose={() => this.setState({ visible: false })}
-          testcases={route.testCase}
+          code={this.state.code}
+          height={containerHeight}
         />
       </div>
     )
