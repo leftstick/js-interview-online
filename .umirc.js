@@ -2,7 +2,7 @@ export default {
   hash: true,
   theme: './src/themes/index.js',
   history: 'hash',
-  targes: {
+  targets: {
     ie: 10
   },
   plugins: [
