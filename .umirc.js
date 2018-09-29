@@ -2,6 +2,7 @@ export default {
   hash: true,
   theme: './src/themes/index.js',
   history: 'hash',
+  publicPath: '/js-interview-online/',
   targets: {
     ie: 10
   },
