@@ -11,9 +11,9 @@ import AceEditor from 'react-ace'
 import 'brace/mode/javascript'
 import 'brace/theme/tomorrow'
 
-import styles from './index.less'
+import { removeComments } from '../../helpers/object'
 
-const STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/gm
+import styles from './index.less'
 
 function getTestCaseRunner(loader) {
   return dynamic({
@@ -70,9 +70,16 @@ function getTestCaseRunner(loader) {
                 return null
               }
 
-              const realCode = code.replace(STRIP_COMMENTS, '').replace(/\s/m, '')
+              const realCode = removeComments(code)
 
-              const executable = new Function(`return ${realCode}`)()
+              let executable = () => {}
+
+              try {
+                executable = new Function(`return ${realCode}`)()
+              } catch (e) {
+                // information reported before
+              }
+
               return (
                 <div className={styles.container} style={{ height: `${height}px` }}>
                   <Icon type="close" theme="outlined" className={styles.closeBtn} onClick={onClose} />

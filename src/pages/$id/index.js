@@ -5,6 +5,7 @@ import { connect } from 'dva'
 import { message, Button } from 'antd'
 
 import { routes } from '../../helpers/exam'
+import { removeComments } from '../../helpers/object'
 
 import styles from './index.less'
 
@@ -24,14 +25,29 @@ class Exam extends React.Component {
     }
   }
 
-  _onCodeChange = (code, regex) => {
-    this.setState({
-      code
-    })
-    const isValid = regex.test(code)
+  _onCodeChange = (code, route) => {
+    const isValid = route.contentValidator(code)
     if (!isValid) {
       message.warn('不可以篡改题目哦')
     }
+
+    try {
+      new Function(`return ${removeComments(code)}`)()
+
+      const isIntegrated = route.contentIntegrityValidator(code)
+      if (!isIntegrated) {
+        message.warn('不可以创建额外的代码哦')
+      }
+    } catch (e) {
+      if (e && e.name && e.name === 'SyntaxError') {
+        message.warn('代码有语法错误哦!')
+      } else {
+        message.warn('你的代码里有什么错误哦!')
+      }
+    }
+    this.setState({
+      code
+    })
   }
 
   render() {
@@ -60,7 +76,7 @@ class Exam extends React.Component {
           className={styles.verifyBtn}
           onClick={() => this.setState({ visible: true })}
         />
-        <Content value={this.state.code} onChange={code => this._onCodeChange(code, route.contentRegex)} />
+        <Content value={this.state.code} onChange={code => this._onCodeChange(code, route)} />
         <CaseRunner
           visible={this.state.visible}
           onClose={() => this.setState({ visible: false })}

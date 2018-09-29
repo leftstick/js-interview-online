@@ -1,3 +1,5 @@
+const STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/gm
+
 export function decodeBase64(str) {
   // Going backwards: from bytestream, to percent-encoding, to original string.
   return decodeURIComponent(
@@ -8,4 +10,8 @@ export function decodeBase64(str) {
       })
       .join('')
   )
+}
+
+export function removeComments(code) {
+  return code.replace(STRIP_COMMENTS, '').replace(/^\s+|\s+$/g, '')
 }
