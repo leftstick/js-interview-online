@@ -86,7 +86,7 @@ function getTestCaseRunner(loader) {
                   <Icon type="right" theme="outlined" className={styles.runBtn} onClick={() => this.exec(executable)} />
                   <div className={styles.innerContainer} style={{ height: `${height - 40}px` }}>
                     {this.state.cases.map(({ testcase, status }) => {
-                      const lenHeight = testcase.split('\n').length * 19
+                      const lenHeight = testcase.split('\n').length * 21
                       return (
                         <div
                           className={classnames(styles.caseContainer, styles[status])}

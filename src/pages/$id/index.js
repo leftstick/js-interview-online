@@ -26,9 +26,12 @@ class Exam extends React.Component {
   }
 
   _onCodeChange = (code, route) => {
+    this.setState({
+      code
+    })
     const isValid = route.contentValidator(code)
     if (!isValid) {
-      message.warn('不可以篡改题目哦')
+      return message.warn('不可以篡改题目哦')
     }
 
     try {
@@ -45,9 +48,6 @@ class Exam extends React.Component {
         message.warn('你的代码里有什么错误哦!')
       }
     }
-    this.setState({
-      code
-    })
   }
 
   render() {
