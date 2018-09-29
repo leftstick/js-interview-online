@@ -1,7 +1,6 @@
 # JavaScript 基础小测验
 
 ![][david-url]
-![][license-url]
 
 淡定的小测验，考考你在框架风生水起的时候，是不是忘光了基本的语言知识。
 
@@ -20,4 +19,3 @@
 [MIT License](https://raw.githubusercontent.com/leftstick/js-interview-online/master/LICENSE)
 
 [david-url]: https://david-dm.org/leftstick/js-interview-online.png
-[license-url]: https://img.shields.io/npm/l/js-interview-online.svg
