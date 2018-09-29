@@ -52,6 +52,7 @@ class Exam extends React.Component {
 
   render() {
     const { locationPathname, screenHeight } = this.props
+
     const route = routes.find(r => r.path === locationPathname)
     if (!route) {
       return (

@@ -16,7 +16,13 @@ import logoSrc from '../assets/logo.png'
 import styles from './OpenPageLayout.less'
 
 function OpenPageLayout(props) {
-  const { pageTitle, children, locationPathname } = props
+  const { pageTitle, children, locationPathname, screenWidth } = props
+
+  destoryGlobalSpinner()
+
+  if (screenWidth < 1000) {
+    return <div className={styles.warning}>本测验不适合在小屏环境下使用，请用大屏幕打开</div>
+  }
 
   if (locationPathname !== '/' && routes.every(r => r.path !== locationPathname)) {
     return (
@@ -27,8 +33,6 @@ function OpenPageLayout(props) {
       />
     )
   }
-
-  destoryGlobalSpinner()
 
   return (
     <React.Fragment>
@@ -65,14 +69,16 @@ function OpenPageLayout(props) {
 OpenPageLayout.propTypes = {
   pageTitle: PropTypes.string,
   children: PropTypes.any,
-  locationPathname: PropTypes.string
+  locationPathname: PropTypes.string,
+  screenWidth: PropTypes.number
 }
 
 export default withRouter(
   connect(({ app }) => {
     return {
       pageTitle: app.pageTitle,
-      locationPathname: app.locationPathname
+      locationPathname: app.locationPathname,
+      screenWidth: app.screenWidth
     }
   })(OpenPageLayout)
 )
