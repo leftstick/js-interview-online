@@ -2,6 +2,9 @@ export default {
   hash: true,
   theme: './src/themes/index.js',
   history: 'hash',
+  targes: {
+    ie: 10
+  },
   plugins: [
     [
       'umi-plugin-react',
@@ -13,7 +16,6 @@ export default {
         routes: {
           exclude: [/model\.(j|t)sx?$/, /service\.(j|t)sx?$/, /models\//, /components\//, /services\//, /helpers\//]
         },
-        polyfills: ['ie10'],
         library: 'react',
         dynamicImport: {
           webpackChunkName: true,
