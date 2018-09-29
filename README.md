@@ -1,8 +1,6 @@
 # JavaScript 基础小测验
 
-[![NPM version][npm-image]][npm-url]
 ![][david-url]
-![][dt-url]
 ![][license-url]
 
 淡定的小测验，考考你在框架风生水起的时候，是不是忘光了基本的语言知识。
