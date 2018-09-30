@@ -40,6 +40,20 @@ function getTestCaseRunner(loader) {
               }
             }
 
+            changeCaseStatus = (testcase, status) => {
+              this.setState({
+                cases: this.state.cases.map(c => {
+                  if (testcase === c.testcase) {
+                    return {
+                      testcase,
+                      status
+                    }
+                  }
+                  return c
+                })
+              })
+            }
+
             exec = code => {
               const self = this
               const { cases } = this.state
@@ -59,17 +73,7 @@ function getTestCaseRunner(loader) {
                   testcase,
                   status: 'executing'
                 }
-                self.setState({
-                  cases: self.state.cases.map(c => {
-                    if (testcase === c.testcase) {
-                      return {
-                        testcase,
-                        status: 'executing'
-                      }
-                    }
-                    return c
-                  })
-                })
+                self.changeCaseStatus(testcase, 'executing')
                 if (!needDone) {
                   try {
                     func(assert, code)
@@ -105,18 +109,7 @@ function getTestCaseRunner(loader) {
               let startIndex = 0
 
               execOne(cases[startIndex].testcase, function toNext(res) {
-                self.setState({
-                  cases: self.state.cases.map(c => {
-                    if (res.testcase === c.testcase) {
-                      return {
-                        testcase: res.testcase,
-                        status: res.status
-                      }
-                    }
-                    return c
-                  })
-                })
-
+                self.changeCaseStatus(res.testcase, res.status)
                 setTimeout(() => {
                   startIndex++
                   const nextCase = cases[startIndex]
@@ -149,7 +142,6 @@ function getTestCaseRunner(loader) {
                   <Icon type="right" theme="outlined" className={styles.runBtn} onClick={() => this.exec(executable)} />
                   <div className={styles.innerContainer} style={{ height: `${height - 40}px` }}>
                     {this.state.cases.map(({ testcase, status }) => {
-                      console.log('status', status)
                       const lenHeight = testcase.split('\n').length * 21
                       return (
                         <div

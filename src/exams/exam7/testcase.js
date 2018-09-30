@@ -19,9 +19,9 @@ setTimeout(function() {
 const thunkRead = thunkify(read);
 
 thunkRead('world.txt')(function(err, res) {
-assert(!err)
-assert('file: world.txt' === res)
-done()
+  assert(!err)
+  assert('file: world.txt' === res)
+  done()
 })`,
 
   `const load = function(fn) {
