@@ -15,3 +15,7 @@ export function decodeBase64(str) {
 export function removeComments(code) {
   return code.replace(STRIP_COMMENTS, '').replace(/^\s+|\s+$/g, '')
 }
+
+export function removeNewLine(code) {
+  return code.replace(/^\s+|\s+$/g, '')
+}

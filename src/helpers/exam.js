@@ -68,5 +68,31 @@ export const routes = [
       return /^function\s*value\(anything\)\s*{[\s\S]*}$/.test(realCode)
     },
     testCase: getTestCaseRunner(() => import(/* webpackChunkName: "case5" */ '../exams/exam5/testcase'))
+  },
+  {
+    path: '/exam6',
+    title: '完成一个camelcase(驼峰化)函数',
+    content: getCodeContent(() => import(/* webpackChunkName: "exam6" */ '../exams/exam6/question.txt')),
+    contentValidator(code) {
+      return /function\s*camelcase\(str\)\s*{[\s\S]*}/.test(code)
+    },
+    contentIntegrityValidator(code) {
+      const realCode = removeComments(code)
+      return /^function\s*camelcase\(str\)\s*{[\s\S]*}$/.test(realCode)
+    },
+    testCase: getTestCaseRunner(() => import(/* webpackChunkName: "case6" */ '../exams/exam6/testcase'))
+  },
+  {
+    path: '/exam7',
+    title: '完成一个thunkify(形式转换)函数',
+    content: getCodeContent(() => import(/* webpackChunkName: "exam7" */ '../exams/exam7/question.txt')),
+    contentValidator(code) {
+      return /function\s*thunkify\(func\)\s*{[\s\S]*}/.test(code)
+    },
+    contentIntegrityValidator(code) {
+      const realCode = removeComments(code)
+      return /^function\s*thunkify\(func\)\s*{[\s\S]*}$/.test(realCode)
+    },
+    testCase: getTestCaseRunner(() => import(/* webpackChunkName: "case7" */ '../exams/exam7/testcase'))
   }
 ]
