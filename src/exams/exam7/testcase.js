@@ -9,19 +9,21 @@ thunkRead('hello.txt')(function(err, res) {
   assert('file: hello.txt' === res)
   done()
 })`,
+
   `const read = function(file, fn) {
-  setTimeout(function() {
-    fn(null, 'file: ' + file)
-  }, 2000)
+setTimeout(function() {
+  fn(null, 'file: ' + file)
+}, 2000)
 }
 
 const thunkRead = thunkify(read);
 
 thunkRead('world.txt')(function(err, res) {
-  assert(!err)
-  assert('file: world.txt' === res)
-  done()
+assert(!err)
+assert('file: world.txt' === res)
+done()
 })`,
+
   `const load = function(fn) {
     fn(null, this.name)
 };
@@ -35,6 +37,7 @@ user.load()(function(err, name) {
   assert('nanfeng' === name)
   done()
 })`,
+
   `const load = function(fn) {
     throw new Error('wow!!!')
 };

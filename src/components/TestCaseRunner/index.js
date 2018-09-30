@@ -60,7 +60,7 @@ function getTestCaseRunner(loader) {
                   status: 'executing'
                 }
                 self.setState({
-                  cases: cases.map(c => {
+                  cases: self.state.cases.map(c => {
                     if (testcase === c.testcase) {
                       return {
                         testcase,
@@ -83,7 +83,7 @@ function getTestCaseRunner(loader) {
                 const timerId = setTimeout(() => {
                   res.status = 'execFailed'
                   return cb(res)
-                }, 10000)
+                }, 5000)
 
                 try {
                   func(assert, code, function(err) {
@@ -106,11 +106,7 @@ function getTestCaseRunner(loader) {
 
               execOne(cases[startIndex].testcase, function toNext(res) {
                 self.setState({
-                  cases: cases.map(c => {
-                    console.log(res.testcase)
-                    console.log(c.testcase)
-                    console.log(res.testcase === c.testcase)
-                    console.log('')
+                  cases: self.state.cases.map(c => {
                     if (res.testcase === c.testcase) {
                       return {
                         testcase: res.testcase,
@@ -120,11 +116,14 @@ function getTestCaseRunner(loader) {
                     return c
                   })
                 })
-                startIndex++
-                const nextCase = cases[startIndex]
-                if (nextCase) {
-                  execOne(nextCase.testcase, toNext)
-                }
+
+                setTimeout(() => {
+                  startIndex++
+                  const nextCase = cases[startIndex]
+                  if (nextCase) {
+                    execOne(nextCase.testcase, toNext)
+                  }
+                }, 100)
               })
             }
 
