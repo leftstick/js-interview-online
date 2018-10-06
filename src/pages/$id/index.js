@@ -82,6 +82,7 @@ class Exam extends React.Component {
           visible={this.state.visible}
           onClose={() => this.setState({ visible: false })}
           code={this.state.code}
+          inputFuncName={route.inputFuncName}
           height={containerHeight}
         />
       </div>

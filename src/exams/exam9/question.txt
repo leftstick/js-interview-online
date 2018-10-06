@@ -1,0 +1,28 @@
+/**
+ *
+ *  尝试完成如下功能：
+ *
+ * const app = new DI();
+ *
+ * app.register('duck', {
+ *   fly() {
+ *     return 'fuck flying'
+ *   }
+ * })
+ *
+ * app.run(['duck', function(duck){
+ *   console.log(duck.fly()) //fuck flying
+ * }])
+ *
+ *
+ **/
+class DI {
+
+  register(name, instance) {
+    // 这里实现
+  }
+
+  run(arr) {
+    // 这里实现
+  }
+}

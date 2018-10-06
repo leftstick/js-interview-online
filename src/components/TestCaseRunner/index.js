@@ -26,6 +26,7 @@ function getTestCaseRunner(loader) {
               visible: PropTypes.bool,
               onClose: PropTypes.func,
               code: PropTypes.string,
+              inputFuncName: PropTypes.string,
               height: PropTypes.number
             }
 
@@ -56,17 +57,18 @@ function getTestCaseRunner(loader) {
 
             exec = code => {
               const self = this
+              const { inputFuncName } = this.props
               const { cases } = this.state
 
-              const inputFuncName = code.toString().match(/function\s*([a-zA-Z_][a-zA-Z_0-1]*).*/)[1]
+              const execName = inputFuncName || code.toString().match(/function\s*([a-zA-Z_][a-zA-Z_0-1]*).*/)[1]
 
               function execOne(testcase, cb) {
                 const needDone = /done\(/.test(testcase)
                 let func = null
                 if (needDone) {
-                  func = new Function('assert', inputFuncName, 'done', testcase)
+                  func = new Function('assert', execName, 'done', testcase)
                 } else {
-                  func = new Function('assert', inputFuncName, testcase)
+                  func = new Function('assert', execName, testcase)
                 }
 
                 const res = {

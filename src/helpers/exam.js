@@ -94,5 +94,50 @@ export const routes = [
       return /^function\s*thunkify\(func\)\s*{[\s\S]*}$/.test(realCode)
     },
     testCase: getTestCaseRunner(() => import(/* webpackChunkName: "case7" */ '../exams/exam7/testcase'))
+  },
+  {
+    path: '/exam8',
+    title: '完成一个times(多次生成)函数',
+    content: getCodeContent(() => import(/* webpackChunkName: "exam8" */ '../exams/exam8/question.txt')),
+    contentValidator(code) {
+      return /function\s*times\(n,\s*func\)\s*{[\s\S]*}/.test(code)
+    },
+    contentIntegrityValidator(code) {
+      const realCode = removeComments(code)
+      return /^function\s*times\(n,\s*func\)\s*{[\s\S]*}$/.test(realCode)
+    },
+    testCase: getTestCaseRunner(() => import(/* webpackChunkName: "case8" */ '../exams/exam8/testcase'))
+  },
+  {
+    path: '/exam9',
+    title: '完成一个DI(依赖注入)类',
+    content: getCodeContent(() => import(/* webpackChunkName: "exam9" */ '../exams/exam9/question.txt')),
+    inputFuncName: 'DI',
+    contentValidator(code) {
+      return /class\s*DI\s*{[\s\S]*register\(name,\s*instance\)\s*{[\s\S]*}[\s\S]*run\(arr\)\s*{[\s\S]*}[\s\S]*}/.test(
+        code
+      )
+    },
+    contentIntegrityValidator(code) {
+      const realCode = removeComments(code)
+      // eslint-disable-next-line
+      return /^class\s*DI\s*{[\s\S]*register\(name,\s*instance\)\s*{[\s\S]*}[\s\S]*run\(arr\)\s*{[\s\S]*}[\s\S]*}$/.test(
+        realCode
+      )
+    },
+    testCase: getTestCaseRunner(() => import(/* webpackChunkName: "case9" */ '../exams/exam9/testcase'))
+  },
+  {
+    path: '/exam10',
+    title: '完成一个difference(找不同)函数',
+    content: getCodeContent(() => import(/* webpackChunkName: "exam10" */ '../exams/exam10/question.txt')),
+    contentValidator(code) {
+      return /function\s*difference\(src,\s*target\)\s*{[\s\S]*}/.test(code)
+    },
+    contentIntegrityValidator(code) {
+      const realCode = removeComments(code)
+      return /^function\s*difference\(src,\s*target\)\s*{[\s\S]*}$/.test(realCode)
+    },
+    testCase: getTestCaseRunner(() => import(/* webpackChunkName: "case10" */ '../exams/exam10/testcase'))
   }
 ]
