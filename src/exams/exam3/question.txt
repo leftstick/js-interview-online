@@ -6,5 +6,5 @@
  *
  **/
 function duplicate(array) {
-    //在这里实现
+  //在这里实现
 }

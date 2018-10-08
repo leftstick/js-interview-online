@@ -28,7 +28,7 @@ class Exam extends React.Component {
   }
 
   componentDidMount() {
-    Modal.info({
+    this.hello = Modal.info({
       title: '是时候表演真正的技术了',
       content: (
         <React.Fragment>
@@ -39,6 +39,10 @@ class Exam extends React.Component {
       ),
       okText: '好'
     })
+  }
+
+  componentWillUnmount() {
+    this.hello.destroy()
   }
 
   _onCodeChange = (code, route) => {

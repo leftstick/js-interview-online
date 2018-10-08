@@ -7,13 +7,12 @@
  *  value(what) === 'The fuck!'
  *
  *  const hello = function() {
- *      return 'world';
- *  };
+ *      return 'world'
+ *  }
  *
  * value(hello) === 'world'
  *
- *
  **/
 function value(anything) {
-    //在这里实现
+  //在这里实现
 }

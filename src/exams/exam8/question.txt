@@ -2,12 +2,11 @@
  *
  *  尝试完成如下功能：
  *
- *  times(1, String); // ['0']
+ *  times(1, String) // ['0']
  *
- *  times(3, Boolean); // [false, true, true]
+ *  times(3, Boolean) // [false, true, true]
  *
- *  times(4, function(i) { return 'Fuck.' + i; }); // ['Fuck.0', 'Fuck.1', 'Fuck.2', 'Fuck.3']
- *
+ *  times(4, function(i) { return 'Fuck.' + i; }) // ['Fuck.0', 'Fuck.1', 'Fuck.2', 'Fuck.3']
  *
  **/
 function times(n, func) {

@@ -18,5 +18,5 @@
  *
  **/
 function thunkify(func) {
-    //在这里实现
+  //在这里实现
 }

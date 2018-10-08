@@ -2,7 +2,7 @@
  *
  *  尝试完成如下功能：
  *
- * const app = new DI();
+ * const app = new DI()
  *
  * app.register('duck', {
  *   fly() {
@@ -13,7 +13,6 @@
  * app.run(['duck', function(duck){
  *   console.log(duck.fly()) //fuck flying
  * }])
- *
  *
  **/
 class DI {
