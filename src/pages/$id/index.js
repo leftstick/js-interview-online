@@ -2,12 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Redirect from 'umi/redirect'
 import { connect } from 'dva'
-import { message, Button } from 'antd'
+import { message, Button, Modal } from 'antd'
 
 import { routes } from '../../helpers/exam'
 import { removeComments } from '../../helpers/object'
 
 import styles from './index.less'
+
+import fightSrc from '../../assets/fight.gif'
 
 class Exam extends React.Component {
   static propTypes = {
@@ -23,6 +25,20 @@ class Exam extends React.Component {
       visible: false,
       code: ''
     }
+  }
+
+  componentDidMount() {
+    Modal.info({
+      title: '是时候表演真正的技术了',
+      content: (
+        <React.Fragment>
+          <br />
+          <br />
+          <img src={fightSrc} alt="" style={{ width: '265px' }} />
+        </React.Fragment>
+      ),
+      okText: '好'
+    })
   }
 
   _onCodeChange = (code, route) => {
