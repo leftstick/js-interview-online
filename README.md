@@ -10,7 +10,7 @@
 
 可以打开如下测试界面：
 
-![](https://raw.githubusercontent.com/leftstick/js-interview-online/master/docs/exam.png)
+![](https://raw.githubusercontent.com/leftstick/js-interview-online/master/docs/exam.gif)
 
 开始愉快的答题吧，给你的面试官致命一击
 
