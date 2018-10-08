@@ -24,12 +24,13 @@ function getCodeContent(loader) {
 
             constructor(props) {
               super(props)
+              const code = sessionStorage.getItem(content) || content
               this.state = {
-                code: content
+                code
               }
 
               const { onChange } = props
-              onChange(content)
+              onChange(code)
             }
 
             static getDerivedStateFromProps(props, state) {
@@ -41,8 +42,13 @@ function getCodeContent(loader) {
               }
             }
 
-            render() {
+            onChange = code => {
               const { onChange } = this.props
+              onChange(code)
+              sessionStorage.setItem(content, code)
+            }
+
+            render() {
               const { code } = this.state
               return (
                 <AceEditor
@@ -51,7 +57,7 @@ function getCodeContent(loader) {
                   mode="javascript"
                   theme="tomorrow"
                   fontSize={14}
-                  onChange={onChange}
+                  onChange={this.onChange}
                   debounceChangePeriod={800}
                   showPrintMargin={true}
                   showGutter={true}
