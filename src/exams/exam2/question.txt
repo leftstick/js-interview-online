@@ -1,6 +1,6 @@
 /**
  *
- *  该模块必须完成以下功能：
+ *  要求，尝试完成如下功能：
  *
  *  const currying = require('currying')
  *
