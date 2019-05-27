@@ -1,16 +1,13 @@
 import queryString from 'query-string'
 import throttle from 'lodash/throttle'
 
-import extend from 'dva-model-extend'
+import { withMixin } from '../helpers/dva'
 
-import commonModel from '../helpers/commonModel'
-
-export default extend(commonModel, {
+export default withMixin({
   namespace: 'app',
   state: {
     locationPathname: '',
     locationQuery: {},
-    pageTitle: 'javascript 小测验',
     screenWidth: window.innerWidth,
     screenHeight: window.innerHeight
   },

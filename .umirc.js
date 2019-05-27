@@ -22,6 +22,12 @@ export default {
           webpackChunkName: true,
           level: 2
         },
+        locale: {
+          default: 'zh-CN'
+        },
+        title: {
+          defaultTitle: 'javascript 小测验'
+        },
         hardSource: false,
         pwa: false,
         hd: false,

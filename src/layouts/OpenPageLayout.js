@@ -16,7 +16,7 @@ import logoSrc from '../assets/logo.png'
 import styles from './OpenPageLayout.less'
 
 function OpenPageLayout(props) {
-  const { pageTitle, children, locationPathname, screenWidth } = props
+  const { children, locationPathname, screenWidth } = props
 
   destoryGlobalSpinner()
 
@@ -37,7 +37,6 @@ function OpenPageLayout(props) {
   return (
     <React.Fragment>
       <Helmet>
-        <title>{pageTitle}</title>
         <link rel="icon" href={favSrc} type="image/x-icon" />
       </Helmet>
       <Layout className={styles.layout}>
@@ -67,7 +66,6 @@ function OpenPageLayout(props) {
 }
 
 OpenPageLayout.propTypes = {
-  pageTitle: PropTypes.string,
   children: PropTypes.any,
   locationPathname: PropTypes.string,
   screenWidth: PropTypes.number
@@ -76,7 +74,6 @@ OpenPageLayout.propTypes = {
 export default withRouter(
   connect(({ app }) => {
     return {
-      pageTitle: app.pageTitle,
       locationPathname: app.locationPathname,
       screenWidth: app.screenWidth
     }
