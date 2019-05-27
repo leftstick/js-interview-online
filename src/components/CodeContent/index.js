@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import dynamic from 'umi/dynamic'
 
@@ -16,63 +16,49 @@ function getCodeContent(loader) {
       return loader()
         .then(toContent)
         .then(content => {
-          class Content extends React.Component {
-            static propTypes = {
-              value: PropTypes.string,
-              onChange: PropTypes.func
-            }
+          function Content(props) {
+            const { value, onChange } = props
 
-            constructor(props) {
-              super(props)
-              const code = sessionStorage.getItem(content) || content
-              this.state = {
-                code
-              }
+            useFirstRunHook(onChange)
 
-              const { onChange } = props
-              onChange(code)
-            }
+            return (
+              <AceEditor
+                width="100%"
+                height="100%"
+                mode="javascript"
+                theme="tomorrow"
+                fontSize={14}
+                onChange={c => hanleCodeChange(c, onChange)}
+                debounceChangePeriod={800}
+                showPrintMargin={true}
+                showGutter={true}
+                highlightActiveLine={true}
+                value={value}
+                setOptions={{
+                  showLineNumbers: true,
+                  tabSize: 2
+                }}
+                editorProps={{
+                  $blockScrolling: Infinity
+                }}
+              />
+            )
+          }
 
-            static getDerivedStateFromProps(props, state) {
-              if (props.value === state.code) {
-                return null
-              }
-              return {
-                code: props.value
-              }
-            }
+          Content.propTypes = {
+            value: PropTypes.string,
+            onChange: PropTypes.func
+          }
 
-            onChange = code => {
-              const { onChange } = this.props
-              onChange(code)
-              sessionStorage.setItem(content, code)
-            }
+          function useFirstRunHook(onChange) {
+            useEffect(() => {
+              onChange(sessionStorage.getItem(content) || content)
+            }, [])
+          }
 
-            render() {
-              const { code } = this.state
-              return (
-                <AceEditor
-                  width="100%"
-                  height="100%"
-                  mode="javascript"
-                  theme="tomorrow"
-                  fontSize={14}
-                  onChange={this.onChange}
-                  debounceChangePeriod={800}
-                  showPrintMargin={true}
-                  showGutter={true}
-                  highlightActiveLine={true}
-                  value={code}
-                  setOptions={{
-                    showLineNumbers: true,
-                    tabSize: 2
-                  }}
-                  editorProps={{
-                    $blockScrolling: Infinity
-                  }}
-                />
-              )
-            }
+          function hanleCodeChange(code, onChange) {
+            onChange(code)
+            sessionStorage.setItem(content, code)
           }
 
           return Content
