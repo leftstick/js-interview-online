@@ -6,7 +6,7 @@
  *
  *  times(3, Boolean) // [false, true, true]
  *
- *  times(4, function(i) { return 'Fuck.' + i; }) // ['Fuck.0', 'Fuck.1', 'Fuck.2', 'Fuck.3']
+ *  times(4, function(i) { return 'Hello.' + i; }) // ['Hello.0', 'Hello.1', 'Hello.2', 'Hello.3']
  *
  **/
 function times(n, func) {

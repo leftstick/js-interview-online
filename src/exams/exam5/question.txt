@@ -2,9 +2,9 @@
  *
  *  要求，尝试完成如下功能：
  *
- *  const what = 'The fuck!';
+ *  const what = 'is this!';
  *
- *  value(what) === 'The fuck!'
+ *  value(what) === 'is this!'
  *
  *  const hello = function() {
  *      return 'world'

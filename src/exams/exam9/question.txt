@@ -6,12 +6,12 @@
  *
  * app.register('duck', {
  *   fly() {
- *     return 'fuck flying'
+ *     return 'Hello flying'
  *   }
  * })
  *
  * app.run(['duck', function(duck){
- *   console.log(duck.fly()) //fuck flying
+ *   console.log(duck.fly()) //Hello flying
  * }])
  *
  **/
