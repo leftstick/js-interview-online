@@ -5,7 +5,7 @@
  *
  *  const say = function(name, words, callback){
  *    setTimeout(function(){
- *      callback({ status: 'FINISHED' })
+ *      callback(undefined, { status: 'FINISHED' })
  *    })
  *  }
  *
