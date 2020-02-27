@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import Redirect from 'umi/redirect'
 import { connect } from 'dva'
 import { message, Button, Modal } from 'antd'
+import debounce from 'lodash/debounce'
 
 import { routes } from '../../helpers/exam'
 import { removeComments } from '../../helpers/object'
@@ -18,16 +18,6 @@ function Exam(props) {
 
   const route = routes.find(r => r.path === locationPathname)
 
-  if (!route) {
-    return (
-      <Redirect
-        to={{
-          pathname: '/exam1'
-        }}
-      />
-    )
-  }
-
   useSayHelloHook()
 
   const { content: Content, testCase: CaseRunner } = route
@@ -37,7 +27,13 @@ function Exam(props) {
   return (
     <div className={styles.content} style={{ height: `${containerHeight}px` }}>
       <Button shape="circle" icon="eye" className={styles.verifyBtn} onClick={() => setVisible(true)} />
-      <Content value={code} onChange={code => _onCodeChange(code, route, setCode)} />
+      <Content
+        value={code}
+        onChange={code => {
+          setCode(code)
+          onCodeChange(code, route)
+        }}
+      />
       <CaseRunner
         visible={visible}
         onClose={() => setVisible(false)}
@@ -54,9 +50,9 @@ Exam.propTypes = {
   screenHeight: PropTypes.number
 }
 
-function _onCodeChange(code, route, setCode) {
-  setCode(code)
+const onCodeChange = debounce(_onCodeChange, 1000)
 
+function _onCodeChange(code, route) {
   const isValid = route.contentValidator(code)
   if (!isValid) {
     return message.warn('不可以篡改题目哦')

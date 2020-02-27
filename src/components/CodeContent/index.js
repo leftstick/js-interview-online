@@ -13,67 +13,61 @@ import { decodeBase64 } from '../../helpers/object'
 import 'brace/mode/javascript'
 import 'brace/theme/tomorrow'
 
-function getCodeContent(loader) {
+function CodeEditor(props) {
+  const { value, onChange, defaultValue } = props
+
+  useEffect(() => {
+    onChange(sessionStorage.getItem(defaultValue) || defaultValue)
+  }, [onChange, defaultValue])
+
+  return (
+    <AceEditor
+      width="100%"
+      height="100%"
+      mode="javascript"
+      theme="tomorrow"
+      fontSize={14}
+      onChange={c => {
+        onChange(c)
+        sessionStorage.setItem(defaultValue, c)
+      }}
+      showPrintMargin={true}
+      showGutter={true}
+      highlightActiveLine={true}
+      value={value}
+      setOptions={{
+        enableBasicAutocompletion: true,
+        enableLiveAutocompletion: true,
+        enableSnippets: true,
+        showLineNumbers: true,
+        tabSize: 2
+      }}
+      editorProps={{
+        $blockScrolling: Infinity
+      }}
+    />
+  )
+}
+
+CodeEditor.propTypes = {
+  defaultValue: PropTypes.string,
+  value: PropTypes.string,
+  onChange: PropTypes.func
+}
+
+export default function(dynamicComponentLoadFunc) {
   return dynamic({
     loader() {
-      return loader()
+      return dynamicComponentLoadFunc()
         .then(toContent)
         .then(content => {
-          function Content(props) {
-            const { value, onChange } = props
-
-            useFirstRunHook(onChange)
-
-            return (
-              <AceEditor
-                width="100%"
-                height="100%"
-                mode="javascript"
-                theme="tomorrow"
-                fontSize={14}
-                onChange={c => hanleCodeChange(c, onChange)}
-                debounceChangePeriod={800}
-                showPrintMargin={true}
-                showGutter={true}
-                highlightActiveLine={true}
-                value={value}
-                setOptions={{
-                  enableBasicAutocompletion: true,
-                  enableLiveAutocompletion: true,
-                  enableSnippets: true,
-                  showLineNumbers: true,
-                  tabSize: 2
-                }}
-                editorProps={{
-                  $blockScrolling: Infinity
-                }}
-              />
-            )
+          return function(props) {
+            return <CodeEditor {...props} defaultValue={content} />
           }
-
-          Content.propTypes = {
-            value: PropTypes.string,
-            onChange: PropTypes.func
-          }
-
-          function useFirstRunHook(onChange) {
-            useEffect(() => {
-              onChange(sessionStorage.getItem(content) || content)
-            }, [onChange])
-          }
-
-          function hanleCodeChange(code, onChange) {
-            onChange(code)
-            sessionStorage.setItem(content, code)
-          }
-
-          return Content
         })
     }
   })
 }
-
-export default getCodeContent
 
 function toContent(data) {
   return decodeBase64(data.default.slice(23))
