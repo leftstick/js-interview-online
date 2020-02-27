@@ -35,6 +35,9 @@ function getCodeContent(loader) {
                 highlightActiveLine={true}
                 value={value}
                 setOptions={{
+                  enableBasicAutocompletion: true,
+                  enableLiveAutocompletion: true,
+                  enableSnippets: true,
                   showLineNumbers: true,
                   tabSize: 2
                 }}
@@ -53,7 +56,7 @@ function getCodeContent(loader) {
           function useFirstRunHook(onChange) {
             useEffect(() => {
               onChange(sessionStorage.getItem(content) || content)
-            }, [])
+            }, [onChange])
           }
 
           function hanleCodeChange(code, onChange) {
