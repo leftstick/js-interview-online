@@ -4,6 +4,9 @@ import dynamic from 'umi/dynamic'
 
 import 'brace'
 import AceEditor from 'react-ace'
+// import 'brace/worker/javascript'
+import 'brace/snippets/javascript'
+import 'brace/ext/language_tools'
 
 import { decodeBase64 } from '../../helpers/object'
 
