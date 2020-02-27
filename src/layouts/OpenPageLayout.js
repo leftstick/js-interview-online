@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'dva'
 import { Layout, Menu } from 'antd'
 import { Helmet } from 'react-helmet'
-import { withRouter } from 'dva/router'
+import { router } from 'dva'
 import Link from 'umi/link'
 import Redirect from 'umi/redirect'
 
@@ -14,6 +14,8 @@ import favSrc from '../assets/favicon.png'
 import logoSrc from '../assets/logo.png'
 
 import styles from './OpenPageLayout.less'
+
+const { withRouter } = router
 
 function OpenPageLayout(props) {
   const { children, locationPathname, screenWidth } = props

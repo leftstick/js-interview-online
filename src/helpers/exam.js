@@ -139,5 +139,18 @@ export const routes = [
       return /^function\s*difference\(src,\s*target\)\s*{[\s\S]*}$/.test(realCode)
     },
     testCase: getTestCaseRunner(() => import(/* webpackChunkName: "case10" */ '../exams/exam10/testcase'))
+  },
+  {
+    path: '/exam11',
+    title: '完成一个flatten(扁平化)函数',
+    content: getCodeContent(() => import(/* webpackChunkName: "exam11" */ '../exams/exam11/question.txt')),
+    contentValidator(code) {
+      return /function\s*flatten\(arr\)\s*{[\s\S]*}/.test(code)
+    },
+    contentIntegrityValidator(code) {
+      const realCode = removeComments(code)
+      return /^function\s*flatten\(arr\)\s*{[\s\S]*}$/.test(realCode)
+    },
+    testCase: getTestCaseRunner(() => import(/* webpackChunkName: "case11" */ '../exams/exam11/testcase'))
   }
 ]
