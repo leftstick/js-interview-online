@@ -24,6 +24,7 @@
     ]
   },
   "dependencies": {
+    "@umijs/hooks": "^1.6.2",
     "assert": "^2.0.0",
     "classnames": "^2.2.6",
     "lodash": "^4.17.15",
@@ -43,6 +44,7 @@
     "lint-staged": "^8.2.1",
     "redbox-react": "^1.6.0",
     "umi": "^2.13.3",
-    "umi-plugin-react": "^1.15.2"
+    "umi-plugin-react": "^1.15.2",
+    "umi-types": "^0.5.12"
   }
 }

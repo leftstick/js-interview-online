@@ -15,10 +15,10 @@ import { removeComments } from '../../helpers/object'
 
 import styles from './index.less'
 
-function getTestCaseRunner(loader) {
+function getTestCaseRunner(dynamicComponentLoadFunc) {
   return dynamic({
     loader() {
-      return loader()
+      return dynamicComponentLoadFunc()
         .then(toCases)
         .then(cases => {
           class CaseRunner extends React.Component {

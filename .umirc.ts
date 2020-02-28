@@ -1,3 +1,5 @@
+import { IConfig } from 'umi-types'
+
 export default {
   hash: true,
   theme: './src/themes/index.js',
@@ -10,12 +12,19 @@ export default {
     [
       'umi-plugin-react',
       {
-        dva: {
-          immer: false
-        },
+        dva: false,
         antd: true,
         routes: {
-          exclude: [/model\.(j|t)sx?$/, /service\.(j|t)sx?$/, /models\//, /components\//, /services\//, /helpers\//]
+          exclude: [
+            /model\.(j|t)sx?$/,
+            /service\.(j|t)sx?$/,
+            /models\//,
+            /hooks\//,
+            /stores\//,
+            /components\//,
+            /services\//,
+            /helpers\//
+          ]
         },
         library: 'react',
         dynamicImport: {
@@ -28,11 +37,10 @@ export default {
         title: {
           defaultTitle: 'javascript 小测验'
         },
-        hardSource: false,
         pwa: false,
         hd: false,
         fastClick: false
       }
     ]
   ]
-}
+} as IConfig

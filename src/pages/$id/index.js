@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'dva'
 import { message, Button, Modal } from 'antd'
 import debounce from 'lodash/debounce'
+import { useSize } from '@umijs/hooks'
+
+import { useRouter } from '../../hooks/useRouter'
 
 import { routes } from '../../helpers/exam'
 import { removeComments } from '../../helpers/object'
@@ -12,20 +14,21 @@ import styles from './index.less'
 import fightSrc from '../../assets/fight.gif'
 
 function Exam(props) {
-  const { locationPathname, screenHeight } = props
+  const [{ height }] = useSize(document.body)
+  const { pathname } = useRouter()
   const [visible, setVisible] = useState(false)
   const [code, setCode] = useState('')
 
-  const route = routes.find(r => r.path === locationPathname)
+  const route = routes.find(r => r.path === pathname)
 
   useSayHelloHook()
 
   const { content: Content, testCase: CaseRunner } = route
 
-  const containerHeight = screenHeight - 64 - 10
+  const containerHeight = height - 64 - 10
 
   return (
-    <div className={styles.content} style={{ height: `${containerHeight}px` }}>
+    <div className={styles.content} style={{ height: containerHeight }}>
       <Button shape="circle" icon="eye" className={styles.verifyBtn} onClick={() => setVisible(true)} />
       <Content
         value={code}
@@ -94,9 +97,4 @@ function useSayHelloHook() {
   }, [])
 }
 
-export default connect(({ app }) => {
-  return {
-    locationPathname: app.locationPathname,
-    screenHeight: app.screenHeight
-  }
-})(Exam)
+export default Exam
