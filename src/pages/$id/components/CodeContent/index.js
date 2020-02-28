@@ -8,7 +8,7 @@ import AceEditor from 'react-ace'
 import 'brace/snippets/javascript'
 import 'brace/ext/language_tools'
 
-import { decodeBase64 } from '../../helpers/object'
+import { decodeBase64 } from '../../../../helpers/object'
 
 import 'brace/mode/javascript'
 import 'brace/theme/tomorrow'

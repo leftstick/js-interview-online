@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'dva'
 import { Layout, Menu } from 'antd'
 import { Helmet } from 'react-helmet'
-import { router } from 'dva'
 import Link from 'umi/link'
 import Redirect from 'umi/redirect'
+import { useSize } from '@umijs/hooks'
+
+import { useRouter } from '../hooks/useRouter'
 
 import { destoryGlobalSpinner } from '../helpers/view'
 import { routes } from '../helpers/exam'
@@ -15,18 +16,19 @@ import logoSrc from '../assets/logo.png'
 
 import styles from './OpenPageLayout.less'
 
-const { withRouter } = router
-
 function OpenPageLayout(props) {
-  const { children, locationPathname, screenWidth } = props
+  const [{ width }] = useSize(document.body)
+  const { pathname } = useRouter()
+
+  const { children } = props
 
   destoryGlobalSpinner()
 
-  if (screenWidth < 1000) {
+  if (width < 1000) {
     return <div className={styles.warning}>本测验不适合在小屏环境下使用，请用大屏幕打开</div>
   }
 
-  if (locationPathname !== '/' && routes.every(r => r.path !== locationPathname)) {
+  if (pathname !== '/' && routes.every(r => r.path !== pathname)) {
     return (
       <Redirect
         to={{
@@ -48,7 +50,7 @@ function OpenPageLayout(props) {
         </Layout.Header>
         <Layout className={styles.main}>
           <Layout.Sider width={300} style={{ background: '#fff' }}>
-            <Menu mode="inline" selectedKeys={[locationPathname]} style={{ height: '100%', borderRight: 0 }}>
+            <Menu mode="inline" selectedKeys={[pathname]} style={{ height: '100%', borderRight: 0 }}>
               {routes.map(r => {
                 return (
                   <Menu.Item key={r.path}>
@@ -73,11 +75,4 @@ OpenPageLayout.propTypes = {
   screenWidth: PropTypes.number
 }
 
-export default withRouter(
-  connect(({ app }) => {
-    return {
-      locationPathname: app.locationPathname,
-      screenWidth: app.screenWidth
-    }
-  })(OpenPageLayout)
-)
+export default OpenPageLayout

@@ -62,6 +62,7 @@ function _onCodeChange(code, route) {
   }
 
   try {
+    // eslint-disable-next-line no-new-func
     new Function(`return ${removeComments(code)}`)()
 
     const isIntegrated = route.contentIntegrityValidator(code)
