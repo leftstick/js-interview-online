@@ -15,25 +15,19 @@ import useCodeRunnerModel from '../../stores/useCodeRunnerModel'
 import styles from './index.less'
 
 function CaseRunner({ visible, onClose, code, inputFuncName, height, cases }) {
-  const {
-    setCurrentCode,
-    setPredefinedFuncName,
-    initTestcases,
-    testcases,
-    execTestcases
-  } = useCodeRunnerModel(model => [
-    model.setCurrentCode,
-    model.setPredefinedFuncName,
-    model.initTestcases,
+  const { initModel, resetModel, testcases, execTestcases } = useCodeRunnerModel(model => [
+    model.initModel,
+    model.resetModel,
     model.testcases,
     model.execTestcases
   ])
 
   useEffect(() => {
-    setCurrentCode(code)
-    setPredefinedFuncName(inputFuncName)
-    initTestcases(cases)
-  }, [setCurrentCode, code, setPredefinedFuncName, inputFuncName, initTestcases, cases])
+    initModel(code, inputFuncName, cases)
+    return () => {
+      resetModel()
+    }
+  }, [code, inputFuncName, cases, initModel, resetModel])
 
   if (!testcases || !visible) {
     return null

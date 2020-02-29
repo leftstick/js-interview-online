@@ -1,8 +1,9 @@
-import { useState, useMemo, useCallback, useEffect } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import { createModel } from 'hox'
 import assert from 'assert'
 
 import { removeComments } from '../../../helpers/object'
+import { delay } from '../../../helpers/timer'
 
 const CASE_STATUS = {
   NOT_EXECUTED: 'notExecuted',
@@ -15,7 +16,7 @@ function useCodeRunnerModel() {
   const [currentCode, setCurrentCode] = useState()
   const [predefinedFuncName, setPredefinedFuncName] = useState()
   const [testcases, setTestcases] = useState()
-  const [runningIndex, setRunningIndex] = useState()
+  const [rawTestcases, setRawTestcases] = useState()
 
   const currentFuncName = useMemo(() => {
     if (predefinedFuncName) {
@@ -37,17 +38,24 @@ function useCodeRunnerModel() {
     }
   }, [currentCode])
 
-  const initTestcases = useCallback(
-    cases => {
-      setTestcases(() => {
-        return cases.map(c => ({
-          testcase: c,
-          status: CASE_STATUS.NOT_EXECUTED
-        }))
-      })
-    },
-    [setTestcases]
-  )
+  const initModel = useCallback((code, inputFuncName, cases) => {
+    setCurrentCode(code)
+    setPredefinedFuncName(inputFuncName)
+    setTestcases(
+      cases.map(c => ({
+        testcase: c,
+        status: CASE_STATUS.NOT_EXECUTED
+      }))
+    )
+    setRawTestcases(cases)
+  }, [])
+
+  const resetModel = useCallback((code, inputFuncName, cases) => {
+    setCurrentCode(undefined)
+    setPredefinedFuncName(undefined)
+    setTestcases(undefined)
+    setRawTestcases(undefined)
+  }, [])
 
   const changeTestcaseStatus = useCallback(
     (testcase, status) => {
@@ -67,85 +75,73 @@ function useCodeRunnerModel() {
   )
 
   const execTestcase = useCallback(
-    (testcase, cb) => {
-      const needDone = /done\(/.test(testcase)
-      let func = null
-      if (needDone) {
-        // eslint-disable-next-line no-new-func
-        func = new Function('assert', currentFuncName, 'done', testcase)
-      } else {
-        // eslint-disable-next-line no-new-func
-        func = new Function('assert', currentFuncName, testcase)
-      }
-
-      const res = {
-        testcase,
-        status: CASE_STATUS.EXECUTING
-      }
+    testcase => {
       changeTestcaseStatus(testcase, 'executing')
-      if (!needDone) {
-        try {
-          func(assert, currentFunc)
-          res.status = CASE_STATUS.EXEC_SUCCESS
-        } catch (e) {
-          res.status = CASE_STATUS.EXEC_FAILED
-        }
-        return cb(res)
-      }
 
-      const failureTimer = setTimeout(() => {
-        res.status = 'execFailed'
-        return cb(res)
-      }, 5000)
-
-      try {
-        func(assert, currentFunc, function(err) {
-          clearTimeout(failureTimer)
-          if (err) {
-            res.status = 'execFailed'
-            return cb(res)
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          const isTestcaseAsync = /done\(/.test(testcase)
+          let testcaseExecFunc = null
+          if (isTestcaseAsync) {
+            // eslint-disable-next-line no-new-func
+            testcaseExecFunc = new Function('assert', currentFuncName, 'done', testcase)
+          } else {
+            // eslint-disable-next-line no-new-func
+            testcaseExecFunc = new Function('assert', currentFuncName, testcase)
           }
-          res.status = 'execSuccess'
-          return cb(res)
-        })
-      } catch (e) {
-        clearTimeout(failureTimer)
-        res.status = 'execFailed'
-        return cb(res)
-      }
+
+          let status = CASE_STATUS.EXEC_SUCCESS
+          if (!isTestcaseAsync) {
+            try {
+              testcaseExecFunc(assert, currentFunc)
+            } catch (e) {
+              status = CASE_STATUS.EXEC_FAILED
+            }
+            changeTestcaseStatus(testcase, status)
+            return resolve()
+          }
+
+          const failureTimer = setTimeout(() => {
+            status = CASE_STATUS.EXEC_FAILED
+            changeTestcaseStatus(testcase, status)
+            return resolve()
+          }, 5000)
+
+          try {
+            testcaseExecFunc(assert, currentFunc, err => {
+              clearTimeout(failureTimer)
+              if (err) {
+                status = CASE_STATUS.EXEC_FAILED
+                changeTestcaseStatus(testcase, status)
+                return resolve()
+              }
+              status = CASE_STATUS.EXEC_SUCCESS
+              changeTestcaseStatus(testcase, status)
+              return resolve()
+            })
+          } catch (e) {
+            clearTimeout(failureTimer)
+            status = CASE_STATUS.EXEC_FAILED
+            changeTestcaseStatus(testcase, status)
+            return resolve()
+          }
+        }, 10)
+      })
     },
     [changeTestcaseStatus, currentFunc, currentFuncName]
   )
 
   const execTestcases = useCallback(() => {
-    setRunningIndex(0)
-  }, [setRunningIndex])
-
-  // case runner
-  useEffect(() => {
-    if (runningIndex === undefined || runningIndex === null) {
-      return
-    }
-    if (testcases[runningIndex] && testcases[runningIndex].status !== CASE_STATUS.NOT_EXECUTED) {
-      return
-    }
-    if (!testcases[runningIndex]) {
-      setRunningIndex(undefined)
-      return
-    }
-    execTestcase(testcases[runningIndex].testcase, res => {
-      changeTestcaseStatus(res.testcase, res.status)
-      setTimeout(() => {
-        setRunningIndex(i => i + 1)
-      }, 100)
-    })
-  }, [runningIndex, execTestcase, changeTestcaseStatus, testcases])
+    new Array(rawTestcases.length).fill(null).reduce((prev, cur, i) => {
+      const next = () => delay(() => execTestcase(rawTestcases[i]), 100)
+      return prev.then(next, next)
+    }, Promise.resolve())
+  }, [rawTestcases, execTestcase])
 
   return {
+    initModel,
+    resetModel,
     testcases,
-    initTestcases,
-    setCurrentCode,
-    setPredefinedFuncName,
     execTestcases
   }
 }
