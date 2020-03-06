@@ -7,6 +7,7 @@ export default defineConfig({
   },
   publicPath: '/js-interview-online/',
   favicon: '/js-interview-online/favicon.png',
+  dynamicImport: {},
   chainWebpack(memo) {
     memo.module
       .rule('raw-loader')
