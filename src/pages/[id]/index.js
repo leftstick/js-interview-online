@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { message, Button, Modal } from 'antd'
+import { useModel } from 'umi'
+import { EyeOutlined } from '@ant-design/icons'
 import debounce from 'lodash/debounce'
-import { useSize } from '@umijs/hooks'
 
-import { useRouter } from '../../hooks/useRouter'
+import { useRouter } from '@/hooks/useRouter'
+import { routes } from '@/helpers/exam'
+import { removeComments } from '@/helpers/object'
 
-import { routes } from '../../helpers/exam'
-import { removeComments } from '../../helpers/object'
+import fightSrc from '@/assets/fight.gif'
 
 import styles from './index.less'
 
-import fightSrc from '../../assets/fight.gif'
-
 function Exam(props) {
-  const [{ height }] = useSize(document.body)
+  const { height } = useModel('useAppModel', app => ({
+    height: app.height
+  }))
+
   const { pathname } = useRouter()
   const [visible, setVisible] = useState(false)
   const [code, setCode] = useState('')
@@ -29,7 +32,7 @@ function Exam(props) {
 
   return (
     <div className={styles.content} style={{ height: containerHeight }}>
-      <Button shape="circle" icon="eye" className={styles.verifyBtn} onClick={() => setVisible(true)} />
+      <Button shape="circle" icon={<EyeOutlined />} className={styles.verifyBtn} onClick={() => setVisible(true)} />
       <Content
         value={code}
         onChange={code => {
@@ -71,7 +74,7 @@ function _onCodeChange(code, route) {
     }
   } catch (e) {
     if (e && e.name && e.name === 'SyntaxError') {
-      message.warn('代码有语法错误哦!')
+      // do nothing
     } else {
       message.warn('你的代码里有什么错误哦!')
     }

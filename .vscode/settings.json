@@ -6,6 +6,5 @@
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "html.format.enable": false,
-  "npm.updateStrategy": "SEMVER",
   "prettier.disableLanguages": ["html"]
 }

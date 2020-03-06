@@ -1,7 +1,7 @@
-import getCodeContent from '../pages/$id/components/CodeContent'
-import getTestCaseRunner from '../pages/$id/components/TestCaseRunner'
+import getCodeContent from '@/components/CodeContent'
+import getTestCaseRunner from '@/components/TestCaseRunner'
 
-import { removeComments } from './object'
+import { removeComments } from '@/helpers/object'
 
 export const routes = [
   {

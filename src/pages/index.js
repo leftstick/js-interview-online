@@ -1,4 +1,4 @@
-import Redirect from 'umi/redirect'
+import { Redirect } from 'umi'
 
 export default () => (
   <Redirect

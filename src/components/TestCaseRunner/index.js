@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { Icon, Spin } from 'antd'
-import dynamic from 'umi/dynamic'
+import { Spin } from 'antd'
+import { CloseOutlined, RightOutlined } from '@ant-design/icons'
+import { dynamic, useModel } from 'umi'
 import classnames from 'classnames'
 
 import 'brace'
@@ -10,17 +11,15 @@ import AceEditor from 'react-ace'
 import 'brace/mode/javascript'
 import 'brace/theme/tomorrow'
 
-import useCodeRunnerModel from '../../stores/useCodeRunnerModel'
-
 import styles from './index.less'
 
 function CaseRunner({ visible, onClose, code, inputFuncName, height, cases }) {
-  const { initModel, resetModel, testcases, execTestcases } = useCodeRunnerModel(model => [
-    model.initModel,
-    model.resetModel,
-    model.testcases,
-    model.execTestcases
-  ])
+  const { initModel, resetModel, testcases, execTestcases } = useModel('useCodeRunnerModel', model => ({
+    initModel: model.initModel,
+    resetModel: model.resetModel,
+    testcases: model.testcases,
+    execTestcases: model.execTestcases
+  }))
 
   useEffect(() => {
     initModel(code, inputFuncName, cases)
@@ -35,8 +34,8 @@ function CaseRunner({ visible, onClose, code, inputFuncName, height, cases }) {
 
   return (
     <div className={styles.container} style={{ height }}>
-      <Icon type="close" theme="outlined" className={styles.closeBtn} onClick={onClose} />
-      <Icon type="right" theme="outlined" className={styles.runBtn} onClick={execTestcases} />
+      <CloseOutlined className={styles.closeBtn} onClick={onClose} />
+      <RightOutlined className={styles.runBtn} onClick={execTestcases} />
       <div className={styles.innerContainer} style={{ height: `${height - 40}px` }}>
         {testcases.map(({ testcase, status }) => {
           const lenHeight = testcase.split('\n').length * 21

@@ -1,9 +1,8 @@
 import { useState, useMemo, useCallback } from 'react'
-import { createModel } from 'hox'
 import assert from 'assert'
 
-import { removeComments } from '../../../helpers/object'
-import { delay } from '../../../helpers/timer'
+import { removeComments } from '@/helpers/object'
+import { delay } from '@/helpers/timer'
 
 const CASE_STATUS = {
   NOT_EXECUTED: 'notExecuted',
@@ -12,7 +11,7 @@ const CASE_STATUS = {
   EXEC_FAILED: 'execFailed'
 }
 
-function useCodeRunnerModel() {
+export default function useCodeRunnerModel() {
   const [currentCode, setCurrentCode] = useState()
   const [predefinedFuncName, setPredefinedFuncName] = useState()
   const [testcases, setTestcases] = useState()
@@ -132,10 +131,15 @@ function useCodeRunnerModel() {
   )
 
   const execTestcases = useCallback(() => {
-    new Array(rawTestcases.length).fill(null).reduce((prev, cur, i) => {
-      const next = () => delay(() => execTestcase(rawTestcases[i]), 100)
-      return prev.then(next, next)
-    }, Promise.resolve())
+    delay(() => {
+      setTestcases(cases => cases.map(c => ({ ...c, status: CASE_STATUS.NOT_EXECUTED })))
+      return Promise.resolve()
+    }).then(() => {
+      new Array(rawTestcases.length).fill(null).reduce((prev, cur, i) => {
+        const next = () => delay(() => execTestcase(rawTestcases[i]), 100)
+        return prev.then(next, next)
+      }, Promise.resolve())
+    })
   }, [rawTestcases, execTestcase])
 
   return {
@@ -145,5 +149,3 @@ function useCodeRunnerModel() {
     execTestcases
   }
 }
-
-export default createModel(useCodeRunnerModel)

@@ -1,23 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Layout, Menu } from 'antd'
-import { Helmet } from 'react-helmet'
-import Link from 'umi/link'
-import Redirect from 'umi/redirect'
-import { useSize } from '@umijs/hooks'
+import { Link, Redirect, useModel } from 'umi'
 
-import { useRouter } from '../hooks/useRouter'
+import { useRouter } from '@/hooks/useRouter'
 
-import { destoryGlobalSpinner } from '../helpers/view'
-import { routes } from '../helpers/exam'
+import { destoryGlobalSpinner } from '@/helpers/view'
+import { routes } from '@/helpers/exam'
 
-import favSrc from '../assets/favicon.png'
-import logoSrc from '../assets/logo.png'
+import logoSrc from '@/assets/logo.png'
 
 import styles from './OpenPageLayout.less'
 
 function OpenPageLayout(props) {
-  const [{ width }] = useSize(document.body)
+  const { width } = useModel('useAppModel', model => ({
+    width: model.width
+  }))
   const { pathname } = useRouter()
 
   const { children } = props
@@ -40,9 +38,6 @@ function OpenPageLayout(props) {
 
   return (
     <React.Fragment>
-      <Helmet>
-        <link rel="icon" href={favSrc} type="image/x-icon" />
-      </Helmet>
       <Layout className={styles.layout}>
         <Layout.Header className={styles.header}>
           <img src={logoSrc} style={{ width: '70px' }} alt="" />

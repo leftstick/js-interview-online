@@ -1,46 +1,17 @@
-import { IConfig } from 'umi-types'
+import { defineConfig } from 'umi'
 
-export default {
+export default defineConfig({
   hash: true,
-  theme: './src/themes/index.js',
-  history: 'hash',
-  publicPath: '/js-interview-online/',
-  targets: {
-    ie: 10
+  history: {
+    type: 'hash'
   },
-  plugins: [
-    [
-      'umi-plugin-react',
-      {
-        dva: false,
-        antd: true,
-        routes: {
-          exclude: [
-            /model\.(j|t)sx?$/,
-            /service\.(j|t)sx?$/,
-            /models\//,
-            /hooks\//,
-            /stores\//,
-            /components\//,
-            /services\//,
-            /helpers\//
-          ]
-        },
-        library: 'react',
-        dynamicImport: {
-          webpackChunkName: true,
-          level: 2
-        },
-        locale: {
-          default: 'zh-CN'
-        },
-        title: {
-          defaultTitle: 'javascript 小测验'
-        },
-        pwa: false,
-        hd: false,
-        fastClick: false
-      }
-    ]
-  ]
-} as IConfig
+  publicPath: '/js-interview-online/',
+  favicon: '/js-interview-online/favicon.png',
+  chainWebpack(memo) {
+    memo.module
+      .rule('raw-loader')
+      .test(/\.(txt|text)$/)
+      .use('raw-loader')
+      .loader('raw-loader')
+  }
+})

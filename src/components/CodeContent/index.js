@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import dynamic from 'umi/dynamic'
+import { dynamic } from 'umi'
 
 import 'brace'
 import AceEditor from 'react-ace'
 // import 'brace/worker/javascript'
 import 'brace/snippets/javascript'
 import 'brace/ext/language_tools'
-
-import { decodeBase64 } from '../../../../helpers/object'
 
 import 'brace/mode/javascript'
 import 'brace/theme/tomorrow'
@@ -70,5 +68,5 @@ export default function(dynamicComponentLoadFunc) {
 }
 
 function toContent(data) {
-  return decodeBase64(data.default.slice(23))
+  return data.default
 }
