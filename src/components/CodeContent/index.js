@@ -2,14 +2,12 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { dynamic } from 'umi'
 
-import 'brace'
 import AceEditor from 'react-ace'
-// import 'brace/worker/javascript'
-import 'brace/snippets/javascript'
-import 'brace/ext/language_tools'
-
-import 'brace/mode/javascript'
-import 'brace/theme/tomorrow'
+import 'ace-builds/webpack-resolver'
+import 'ace-builds/src-noconflict/mode-javascript'
+import 'ace-builds/src-noconflict/theme-tomorrow'
+import 'ace-builds/src-noconflict/ext-language_tools'
+import 'ace-builds/src-noconflict/snippets/javascript'
 
 function CodeEditor(props) {
   const { value, onChange, defaultValue } = props

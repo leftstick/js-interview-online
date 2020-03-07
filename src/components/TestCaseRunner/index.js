@@ -5,11 +5,12 @@ import { CloseOutlined, RightOutlined } from '@ant-design/icons'
 import { dynamic, useModel } from 'umi'
 import classnames from 'classnames'
 
-import 'brace'
 import AceEditor from 'react-ace'
-
-import 'brace/mode/javascript'
-import 'brace/theme/tomorrow'
+import 'ace-builds/webpack-resolver'
+import 'ace-builds/src-noconflict/mode-javascript'
+import 'ace-builds/src-noconflict/theme-tomorrow'
+import 'ace-builds/src-noconflict/ext-language_tools'
+import 'ace-builds/src-noconflict/snippets/javascript'
 
 import styles from './index.less'
 
