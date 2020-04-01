@@ -1,27 +1,22 @@
 /**
  *
- *  要求，尝试完成如下功能：
+ *  给出一颗树节点定义如下：
  *
- * const app = new DI()
+ *  interface TreeNode {
+ *    value: any
+ *    left?: TreeNode
+ *    right?: TreeNode
+ *  }
  *
- * app.register('duck', {
- *   fly() {
- *     return 'Hello flying'
- *   }
- * })
+ *  要求，获取二叉树的深度，例如：如下树深度为 3
  *
- * app.run(['duck', function(duck){
- *   console.log(duck.fly()) //Hello flying
- * }])
+ *       3
+ *      / \
+ *      9  20
+ *        /  \
+ *      15   7
  *
  **/
-class DI {
-
-  register(name, instance) {
-    // 这里实现
-  }
-
-  run(arr) {
-    // 这里实现
-  }
+function maxDepth(treeNode) {
+  //在这里实现
 }

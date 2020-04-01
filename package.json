@@ -24,22 +24,21 @@
     ]
   },
   "dependencies": {
-    "@umijs/hooks": "^1.7.0",
+    "@umijs/hooks": "^1.8.1",
     "assert": "^2.0.0",
     "classnames": "^2.2.6",
     "lodash": "^4.17.15",
-    "react-ace": "^8.0.0"
+    "react-ace": "^8.1.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
-    "@umijs/plugin-antd": "^0.3.0",
-    "@umijs/plugin-model": "^2.1.1",
+    "@umijs/plugin-antd": "^0.4.0",
+    "@umijs/plugin-model": "^2.2.0",
     "gh-pages": "^2.2.0",
     "husky": "^4.2.3",
-    "lint-staged": "^10.0.8",
+    "lint-staged": "^10.1.1",
     "react-coding-style": "^1.0.0",
-    "raw-loader": "^4.0.0",
-    "umi": "^3.0.5"
+    "umi": "^3.0.16"
   }
 }
