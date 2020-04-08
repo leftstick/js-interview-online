@@ -54,7 +54,6 @@ export default ({ exam, height }: ICodeExecutorProps) => {
   }
 
   if (isEmptyArray(testcases)) {
-    console.log('sdfdsfs')
     return (
       <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Spin spinning size="large" />
