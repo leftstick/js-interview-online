@@ -1,1 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([[25],{RXBc:function(e,t,a){"use strict";a.r(t);var n=a("q1tI"),c=a.n(n),o=a("Ty5D");t["default"]=()=>c.a.createElement(o["Redirect"],{to:{pathname:"/exam1"}})}}]);
