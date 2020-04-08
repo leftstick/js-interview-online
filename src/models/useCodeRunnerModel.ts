@@ -1,35 +1,49 @@
 import { useState, useMemo, useCallback } from 'react'
 import assert from 'assert'
 
-import { removeComments } from '@/helpers/object'
-import { delay } from '@/helpers/timer'
+import { removeComments, delay, CASE_STATUS, isNotEmpty } from '@/helpers'
 
-const CASE_STATUS = {
-  NOT_EXECUTED: 'notExecuted',
-  EXECUTING: 'executing',
-  EXEC_SUCCESS: 'execSuccess',
-  EXEC_FAILED: 'execFailed'
+interface ITestcase {
+  name: string
+  status: CASE_STATUS
 }
 
 export default function useCodeRunnerModel() {
-  const [currentCode, setCurrentCode] = useState()
-  const [predefinedFuncName, setPredefinedFuncName] = useState()
-  const [testcases, setTestcases] = useState()
-  const [rawTestcases, setRawTestcases] = useState()
+  const [executorVisible, setExecutorVisible] = useState<boolean>(false)
+  const [currentCode, setCurrentCode] = useState<string>()
+  const [testcases, setTestcases] = useState<ITestcase[]>()
+  const [rawTestcases, setRawTestcases] = useState<string[]>()
+
+  const initExecutor = useCallback((cases: string[]) => {
+    setTestcases(
+      cases.map(c => ({
+        name: c,
+        status: CASE_STATUS.NOT_EXECUTED
+      }))
+    )
+    setRawTestcases(cases)
+  }, [])
+
+  const resetExecutor = useCallback(() => {
+    setCurrentCode(undefined)
+    setTestcases(undefined)
+    setRawTestcases(undefined)
+  }, [])
+
+  const toggleExecutorVisible = useCallback(() => {
+    setExecutorVisible(v => !v)
+  }, [setExecutorVisible])
 
   const currentFuncName = useMemo(() => {
-    if (predefinedFuncName) {
-      return predefinedFuncName
-    }
-    if (currentCode) {
-      return currentCode.match(/function\s*([a-zA-Z_][a-zA-Z_0-1]*).*/)[1]
+    if (isNotEmpty<string>(currentCode)) {
+      return currentCode.match(/function\s*([a-zA-Z_][a-zA-Z_0-1]*).*/)![1]
     }
     return ''
-  }, [predefinedFuncName, currentCode])
+  }, [currentCode])
 
   const currentFunc = useMemo(() => {
     try {
-      const realCode = removeComments(currentCode)
+      const realCode = removeComments(currentCode!)
       // eslint-disable-next-line no-new-func
       return new Function(`return ${realCode}`)()
     } catch (e) {
@@ -37,32 +51,13 @@ export default function useCodeRunnerModel() {
     }
   }, [currentCode])
 
-  const initModel = useCallback((code, inputFuncName, cases) => {
-    setCurrentCode(code)
-    setPredefinedFuncName(inputFuncName)
-    setTestcases(
-      cases.map(c => ({
-        testcase: c,
-        status: CASE_STATUS.NOT_EXECUTED
-      }))
-    )
-    setRawTestcases(cases)
-  }, [])
-
-  const resetModel = useCallback((code, inputFuncName, cases) => {
-    setCurrentCode(undefined)
-    setPredefinedFuncName(undefined)
-    setTestcases(undefined)
-    setRawTestcases(undefined)
-  }, [])
-
   const changeTestcaseStatus = useCallback(
-    (testcase, status) => {
+    (name, status: CASE_STATUS) => {
       setTestcases(cases => {
-        return cases.map(c => {
-          if (testcase === c.testcase) {
+        return cases!.map(c => {
+          if (name === c.name) {
             return {
-              testcase,
+              name,
               status
             }
           }
@@ -75,9 +70,9 @@ export default function useCodeRunnerModel() {
 
   const execTestcase = useCallback(
     testcase => {
-      changeTestcaseStatus(testcase, 'executing')
+      changeTestcaseStatus(testcase, CASE_STATUS.EXECUTING)
 
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         setTimeout(() => {
           const isTestcaseAsync = /done\(/.test(testcase)
           let testcaseExecFunc = null
@@ -107,7 +102,7 @@ export default function useCodeRunnerModel() {
           }, 5000)
 
           try {
-            testcaseExecFunc(assert, currentFunc, err => {
+            testcaseExecFunc(assert, currentFunc, (err: Error) => {
               clearTimeout(failureTimer)
               if (err) {
                 status = CASE_STATUS.EXEC_FAILED
@@ -132,20 +127,24 @@ export default function useCodeRunnerModel() {
 
   const execTestcases = useCallback(() => {
     delay(() => {
-      setTestcases(cases => cases.map(c => ({ ...c, status: CASE_STATUS.NOT_EXECUTED })))
+      setTestcases(cases => cases!.map(c => ({ ...c, status: CASE_STATUS.NOT_EXECUTED })))
       return Promise.resolve()
-    }).then(() => {
-      new Array(rawTestcases.length).fill(null).reduce((prev, cur, i) => {
-        const next = () => delay(() => execTestcase(rawTestcases[i]), 100)
+    }, 0).then(() => {
+      new Array(rawTestcases!.length).fill(null).reduce((prev, cur, i) => {
+        const next = () => delay(() => execTestcase(rawTestcases![i]), 100)
         return prev.then(next, next)
       }, Promise.resolve())
     })
   }, [rawTestcases, execTestcase])
 
   return {
-    initModel,
-    resetModel,
+    initExecutor,
+    resetExecutor,
+    currentCode,
+    setCurrentCode,
     testcases,
-    execTestcases
+    execTestcases,
+    executorVisible,
+    toggleExecutorVisible
   }
 }

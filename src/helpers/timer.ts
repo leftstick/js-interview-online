@@ -1,4 +1,4 @@
-export function delay(func, timeout) {
+export function delay(func: Function, timeout: number) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       try {

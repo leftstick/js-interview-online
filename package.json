@@ -24,7 +24,7 @@
     ]
   },
   "dependencies": {
-    "@umijs/hooks": "^1.8.1",
+    "@umijs/hooks": "^1.9.0",
     "assert": "^2.0.0",
     "classnames": "^2.2.6",
     "lodash": "^4.17.15",
@@ -33,12 +33,13 @@
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
-    "@umijs/plugin-antd": "^0.4.0",
+    "@types/classnames": "^2.2.10",
+    "@umijs/plugin-antd": "^0.4.3",
     "@umijs/plugin-model": "^2.2.0",
     "gh-pages": "^2.2.0",
     "husky": "^4.2.3",
-    "lint-staged": "^10.1.1",
+    "lint-staged": "^10.1.2",
     "react-coding-style": "^1.0.0",
-    "umi": "^3.0.16"
+    "umi": "^3.1.0"
   }
 }
