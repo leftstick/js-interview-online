@@ -18,9 +18,8 @@ interface ICodeEditorProps {
 
 export default ({ exam }: ICodeEditorProps) => {
   const [examInitial, setExamInitial] = useState('')
-  const { checkCode } = useModel('useAppModel', app => pick(app, 'checkCode'))
-  const { setCurrentCode, currentCode } = useModel('useCodeRunnerModel', model =>
-    pick(model, 'setCurrentCode', 'currentCode')
+  const { setCurrentCode, currentCode, checkCode } = useModel('useCodeRunnerModel', model =>
+    pick(model, 'setCurrentCode', 'currentCode', 'checkCode')
   )
 
   useEffect(() => {
@@ -52,7 +51,7 @@ export default ({ exam }: ICodeEditorProps) => {
       fontSize={14}
       onChange={c => {
         setCurrentCode(c)
-        checkCode(c)
+        checkCode(c, exam)
         sessionStorage.setItem(exam.id, c)
       }}
       showPrintMargin={true}

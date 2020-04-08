@@ -12,7 +12,7 @@ import styles from './index.less'
 
 function Exam() {
   const { height, sayHi, setupExam, workingExam } = useModel('useAppModel', app =>
-    pick(app, 'height', 'sayHi', 'checkCode', 'setupExam', 'workingExam')
+    pick(app, 'height', 'sayHi', 'setupExam', 'workingExam')
   )
 
   const { toggleExecutorVisible } = useModel('useCodeRunnerModel', model => pick(model, 'toggleExecutorVisible'))

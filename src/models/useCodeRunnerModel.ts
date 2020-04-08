@@ -1,7 +1,11 @@
 import { useState, useMemo, useCallback } from 'react'
 import assert from 'assert'
+import { message } from 'antd'
+
+import debounce from 'lodash/debounce'
 
 import { removeComments, delay, CASE_STATUS, isNotEmpty } from '@/helpers'
+import { IExam } from '@/types'
 
 interface ITestcase {
   name: string
@@ -50,6 +54,33 @@ export default function useCodeRunnerModel() {
       return () => {}
     }
   }, [currentCode])
+
+  const checkCode = useCallback(
+    debounce((code: string, workingExam: IExam) => {
+      const { contentRegexp } = workingExam
+      const integrityRegexp = new RegExp(`^${contentRegexp.source}$`)
+      if (!contentRegexp.test(code)) {
+        return message.warn('不可以篡改题目哦')
+      }
+
+      try {
+        const pureCode = removeComments(code)
+        // eslint-disable-next-line no-new-func
+        new Function(`return ${pureCode}`)()
+
+        if (!integrityRegexp.test(pureCode)) {
+          message.warn('不可以创建额外的代码哦')
+        }
+      } catch (e) {
+        if (e && e.name && e.name === 'SyntaxError') {
+          // do nothing
+        } else {
+          message.warn('你的代码里有什么错误哦!')
+        }
+      }
+    }, 1000),
+    []
+  )
 
   const changeTestcaseStatus = useCallback(
     (name, status: CASE_STATUS) => {
@@ -140,6 +171,7 @@ export default function useCodeRunnerModel() {
   return {
     initExecutor,
     resetExecutor,
+    checkCode,
     currentCode,
     setCurrentCode,
     testcases,
