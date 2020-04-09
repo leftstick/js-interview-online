@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react'
-import { Button } from 'antd'
+import { Button, Spin } from 'antd'
 import { useModel, useParams } from 'umi'
 import { EyeOutlined } from '@ant-design/icons'
 
@@ -11,18 +11,18 @@ import TestcaseExecutor from './components/TestcaseExecutor'
 import styles from './index.less'
 
 function Exam() {
-  const { height, sayHi, setupExam, workingExam } = useModel('useAppModel', app =>
-    pick(app, 'height', 'sayHi', 'setupExam', 'workingExam')
-  )
+  const { height, sayHi } = useModel('useAppModel', app => pick(app, 'height', 'sayHi'))
 
-  const { toggleExecutorVisible } = useModel('useCodeRunnerModel', model => pick(model, 'toggleExecutorVisible'))
+  const { setupExam, workingExam, executorVisible, toggleExecutorVisible } = useModel('useInterviewModel', model =>
+    pick(model, 'setupExam', 'workingExam', 'executorVisible', 'toggleExecutorVisible')
+  )
 
   const containerHeight = useMemo(() => height! - 64 - 10, [height])
 
   const params: { id?: string } = useParams()
 
   useEffect(() => {
-    setupExam(params.id!)
+    return setupExam(params.id!)
   }, [setupExam, params])
 
   useEffect(() => {
@@ -30,14 +30,18 @@ function Exam() {
   }, [sayHi])
 
   if (isEmpty(workingExam)) {
-    return null
+    return (
+      <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Spin spinning size="large" />
+      </div>
+    )
   }
 
   return (
     <div className={styles.content} style={{ height: containerHeight }}>
       <Button shape="circle" icon={<EyeOutlined />} className={styles.verifyBtn} onClick={toggleExecutorVisible} />
-      <CodeEditor exam={workingExam} />
-      <TestcaseExecutor exam={workingExam} height={containerHeight} />
+      {workingExam && <CodeEditor />}
+      {workingExam && executorVisible && <TestcaseExecutor height={containerHeight} />}
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useModel } from 'umi'
 import { Spin } from 'antd'
 import { CloseOutlined, RightOutlined } from '@ant-design/icons'
@@ -11,70 +11,34 @@ import 'ace-builds/src-noconflict/theme-tomorrow'
 import 'ace-builds/src-noconflict/ext-language_tools'
 import 'ace-builds/src-noconflict/snippets/javascript'
 
-import { isEmptyArray, pick, CASE_STATUS } from '@/helpers'
-import { IExam } from '@/types'
+import { pick } from '@/helpers'
+import { CASE_STATUS } from '@/types'
 
 import styles from './index.less'
 
 interface ICodeExecutorProps {
-  exam: IExam
   height: number
 }
 
-export default ({ exam, height }: ICodeExecutorProps) => {
-  const {
-    initExecutor,
-    resetExecutor,
-    testcases,
-    execTestcases,
-    executorVisible,
-    toggleExecutorVisible
-  } = useModel('useCodeRunnerModel', model =>
-    pick(
-      model,
-      'execTestcases',
-      'initExecutor',
-      'resetExecutor',
-      'testcases',
-      'executorVisible',
-      'toggleExecutorVisible'
-    )
+export default ({ height }: ICodeExecutorProps) => {
+  const { workingExam, execTestcases, toggleExecutorVisible } = useModel('useInterviewModel', model =>
+    pick(model, 'workingExam', 'execTestcases', 'toggleExecutorVisible')
   )
-
-  useEffect(() => {
-    exam.getTestcases().then(mod => {
-      initExecutor(mod.default)
-    })
-
-    return resetExecutor
-  }, [exam, initExecutor, resetExecutor])
-
-  if (!executorVisible) {
-    return null
-  }
-
-  if (isEmptyArray(testcases)) {
-    return (
-      <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Spin spinning size="large" />
-      </div>
-    )
-  }
 
   return (
     <div className={styles.container} style={{ height }}>
       <CloseOutlined className={styles.closeBtn} onClick={toggleExecutorVisible} />
       <RightOutlined className={styles.runBtn} onClick={execTestcases} />
       <div className={styles.innerContainer} style={{ height: `${height - 40}px` }}>
-        {testcases!.map(({ name, status }) => {
-          const lenHeight = name.split('\n').length * 21
+        {workingExam!.testcases.map(({ content, status }) => {
+          const lenHeight = content.split('\n').length * 21
           return (
             <div
               className={classnames(styles.caseContainer, {
                 [styles.execFailed]: status === CASE_STATUS.EXEC_FAILED,
                 [styles.execSuccess]: status === CASE_STATUS.EXEC_SUCCESS
               })}
-              key={name}
+              key={content}
               style={{ height: `${lenHeight + 20}px` }}
             >
               <Spin spinning={status === CASE_STATUS.EXECUTING} className={styles.spinning} />
@@ -87,7 +51,7 @@ export default ({ exam, height }: ICodeExecutorProps) => {
                 showGutter={false}
                 fontSize={14}
                 readOnly={true}
-                value={name}
+                value={content}
                 editorProps={{
                   $blockScrolling: Infinity
                 }}

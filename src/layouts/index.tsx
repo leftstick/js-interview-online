@@ -7,7 +7,8 @@ import { pick, destoryGlobalSpinner } from '@/helpers'
 import styles from './index.less'
 
 export default ({ location, children }: IRouteComponentProps) => {
-  const { width, matchExam, exams } = useModel('useAppModel', model => pick(model, 'width', 'matchExam', 'exams'))
+  const { width } = useModel('useAppModel', model => pick(model, 'width'))
+  const { matchExam, rawExams } = useModel('useInterviewModel', model => pick(model, 'matchExam', 'rawExams'))
   const { pathname } = location
 
   useEffect(() => {
@@ -38,7 +39,7 @@ export default ({ location, children }: IRouteComponentProps) => {
         <Layout className={styles.main}>
           <Layout.Sider width={300} style={{ background: '#fff' }}>
             <Menu mode="inline" selectedKeys={[pathname]} style={{ height: '100%', borderRight: 0 }}>
-              {exams.map(r => {
+              {rawExams.map(r => {
                 return (
                   <Menu.Item key={`/${r.id}`}>
                     <Link to={`/${r.id}`}>{r.title}</Link>
