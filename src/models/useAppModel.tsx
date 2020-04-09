@@ -1,9 +1,10 @@
 import React, { useCallback } from 'react'
-import { useSize } from '@umijs/hooks'
+import { useSize, useLocalStorageState } from '@umijs/hooks'
 import { Modal } from 'antd'
 
 export default function() {
   const [{ width, height }] = useSize(document.body)
+  const [sidebarCollapsed, setSidebarCollapsed] = useLocalStorageState('sidebar-collapsed', false)
 
   const sayHi = useCallback(() => {
     const hi = Modal.info({
@@ -23,9 +24,15 @@ export default function() {
     }
   }, [])
 
+  const toggleSidebar = useCallback(() => {
+    setSidebarCollapsed(s => !s)
+  }, [setSidebarCollapsed])
+
   return {
     width,
     height,
-    sayHi
+    sayHi,
+    sidebarCollapsed,
+    toggleSidebar
   }
 }

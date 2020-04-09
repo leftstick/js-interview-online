@@ -15,6 +15,7 @@ export default () => {
   const { code } = workingExam!
 
   const editor = useMemo(() => {
+    console.log('code editor')
     return (
       <AceEditor
         width="100%"

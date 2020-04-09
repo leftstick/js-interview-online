@@ -1,13 +1,16 @@
 import React, { useEffect } from 'react'
 import { Layout, Menu } from 'antd'
-import { Link, Redirect, useModel, IRouteComponentProps } from 'umi'
-
+import { Redirect, useModel, IRouteComponentProps, history } from 'umi'
 import { pick, destoryGlobalSpinner } from '@/helpers'
+
+import { MenuFoldButton } from '@/components'
 
 import styles from './index.less'
 
 export default ({ location, children }: IRouteComponentProps) => {
-  const { width } = useModel('useAppModel', model => pick(model, 'width'))
+  const { width, sidebarCollapsed, toggleSidebar } = useModel('useAppModel', model =>
+    pick(model, 'width', 'sidebarCollapsed', 'toggleSidebar')
+  )
   const { matchExam, rawExams } = useModel('useInterviewModel', model => pick(model, 'matchExam', 'rawExams'))
   const { pathname } = location
 
@@ -35,14 +38,32 @@ export default ({ location, children }: IRouteComponentProps) => {
         <Layout.Header className={styles.header}>
           <img src="/js-interview-online/logo.png" style={{ width: '70px' }} alt="" />
           <h2>javascript 小测验</h2>
+          &nbsp; <MenuFoldButton collapsed={sidebarCollapsed} onToggle={toggleSidebar} />
         </Layout.Header>
         <Layout className={styles.main}>
-          <Layout.Sider width={300} style={{ background: '#fff' }}>
-            <Menu mode="inline" selectedKeys={[pathname]} style={{ height: '100%', borderRight: 0 }}>
+          <Layout.Sider
+            width={280}
+            style={{ background: '#fff' }}
+            trigger={null}
+            collapsible
+            collapsed={sidebarCollapsed}
+          >
+            <Menu
+              mode="inline"
+              selectedKeys={[pathname]}
+              style={{ height: '100%', borderRight: 0 }}
+              onSelect={e => {
+                history.push(e.key)
+              }}
+            >
               {rawExams.map(r => {
+                const [, no, title] = r.title.match(/^([0-9]+\.)\s(.+)/)!
                 return (
                   <Menu.Item key={`/${r.id}`}>
-                    <Link to={`/${r.id}`}>{r.title}</Link>
+                    <span className="anticon" style={{ verticalAlign: 'baseline' }}>
+                      {no}
+                    </span>
+                    <span>{title}</span>
                   </Menu.Item>
                 )
               })}
