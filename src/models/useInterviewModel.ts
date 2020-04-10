@@ -7,7 +7,7 @@ import debounce from 'lodash/debounce'
 import { validateCode, delay, reflectFunctionFromText, reflectFunctionName } from '@/helpers'
 import { IExam, CASE_STATUS } from '@/types'
 
-import { exams as rawExams } from './exams'
+import rawExams from '../exams'
 
 export default function useInterviewModel() {
   const [workingExam, setWorkingExam] = useState<IExam>()

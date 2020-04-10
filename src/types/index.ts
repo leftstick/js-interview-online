@@ -29,3 +29,7 @@ export interface IExam {
   contentRegexp: RegExp
   testcases: ITestcase[]
 }
+
+export function defineExamRaw(examRaw: IExamRaw) {
+  return examRaw
+}
