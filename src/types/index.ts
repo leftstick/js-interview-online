@@ -12,8 +12,8 @@ interface ESM<T> {
 export interface IExamRaw {
   id: string
   title: string
-  getExamInitial: () => Promise<ESM<string>>
   contentRegexp: RegExp
+  getExamInitial: () => Promise<ESM<string>>
   getTestcases: () => Promise<ESM<string[]>>
 }
 
