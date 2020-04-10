@@ -1,5 +1,4 @@
 import React from 'react'
-import { useModel } from 'umi'
 import { Spin } from 'antd'
 import { CloseOutlined, RightOutlined } from '@ant-design/icons'
 import classnames from 'classnames'
@@ -11,26 +10,24 @@ import 'ace-builds/src-noconflict/theme-tomorrow'
 import 'ace-builds/src-noconflict/ext-language_tools'
 import 'ace-builds/src-noconflict/snippets/javascript'
 
-import { pick } from '@/helpers'
-import { CASE_STATUS } from '@/types'
+import { CASE_STATUS, ITestcase } from '@/types'
 
 import styles from './index.less'
 
 interface ICodeExecutorProps {
   height: number
+  testcases: ITestcase[]
+  onCloseExecutor: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
+  execTestcases: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
 }
 
-export default ({ height }: ICodeExecutorProps) => {
-  const { workingExam, execTestcases, toggleExecutorVisible } = useModel('useInterviewModel', model =>
-    pick(model, 'workingExam', 'execTestcases', 'toggleExecutorVisible')
-  )
-
+export default ({ height, testcases, onCloseExecutor, execTestcases }: ICodeExecutorProps) => {
   return (
     <div className={styles.container} style={{ height }}>
-      <CloseOutlined className={styles.closeBtn} onClick={toggleExecutorVisible} />
+      <CloseOutlined className={styles.closeBtn} onClick={onCloseExecutor} />
       <RightOutlined className={styles.runBtn} onClick={execTestcases} />
       <div className={styles.innerContainer} style={{ height: `${height - 40}px` }}>
-        {workingExam!.testcases.map(({ content, status }) => {
+        {testcases.map(({ content, status }) => {
           const lenHeight = content.split('\n').length * 21
           return (
             <div

@@ -17,7 +17,7 @@ export interface IExamRaw {
   getTestcases: () => Promise<ESM<string[]>>
 }
 
-interface ITestcase {
+export interface ITestcase {
   content: string
   status: CASE_STATUS
 }

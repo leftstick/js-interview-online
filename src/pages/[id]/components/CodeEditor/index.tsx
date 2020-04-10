@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react'
-import { useModel } from 'umi'
 
 import AceEditor from 'react-ace'
 import 'ace-builds/webpack-resolver'
@@ -8,12 +7,12 @@ import 'ace-builds/src-noconflict/theme-tomorrow'
 import 'ace-builds/src-noconflict/ext-language_tools'
 import 'ace-builds/src-noconflict/snippets/javascript'
 
-import { pick } from '@/helpers'
+interface IEditorProps {
+  onCodeChange: (value: string) => void
+  code: string
+}
 
-export default () => {
-  const { modifyCode, workingExam } = useModel('useInterviewModel', model => pick(model, 'modifyCode', 'workingExam'))
-  const { code } = workingExam!
-
+export default ({ onCodeChange, code }: IEditorProps) => {
   const editor = useMemo(() => {
     console.log('code editor')
     return (
@@ -23,9 +22,7 @@ export default () => {
         mode="javascript"
         theme="tomorrow"
         fontSize={14}
-        onChange={c => {
-          modifyCode(c)
-        }}
+        onChange={onCodeChange}
         showPrintMargin={true}
         showGutter={true}
         highlightActiveLine={true}
@@ -42,7 +39,7 @@ export default () => {
         }}
       />
     )
-  }, [code, modifyCode])
+  }, [onCodeChange, code])
 
   return editor
 }
