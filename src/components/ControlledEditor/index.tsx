@@ -1,5 +1,4 @@
 import React from 'react'
-
 import AceEditor from 'react-ace'
 import 'ace-builds/webpack-resolver'
 import 'ace-builds/src-noconflict/mode-javascript'
@@ -7,13 +6,8 @@ import 'ace-builds/src-noconflict/theme-tomorrow'
 import 'ace-builds/src-noconflict/ext-language_tools'
 import 'ace-builds/src-noconflict/snippets/javascript'
 
-interface IEditorProps {
-  onCodeChange: (value: string) => void
-  code: string
-}
-
-function CodeEditor({ onCodeChange, code }: IEditorProps) {
-  console.log('code editor')
+export default React.memo(function({ onCodeChange, value }: { onCodeChange: (value: string) => void; value: string }) {
+  console.count('ControlledEditor')
   return (
     <AceEditor
       width="100%"
@@ -25,7 +19,7 @@ function CodeEditor({ onCodeChange, code }: IEditorProps) {
       showPrintMargin={true}
       showGutter={true}
       highlightActiveLine={true}
-      value={code}
+      value={value}
       setOptions={{
         enableBasicAutocompletion: true,
         enableLiveAutocompletion: true,
@@ -38,6 +32,4 @@ function CodeEditor({ onCodeChange, code }: IEditorProps) {
       }}
     />
   )
-}
-
-export default React.memo(CodeEditor)
+})

@@ -13,23 +13,16 @@ import styles from './index.less'
 function Exam() {
   const { height, sayHi } = useModel('useAppModel', app => pick(app, 'height', 'sayHi'))
 
-  const {
-    setupExam,
-    workingExam,
-    executorVisible,
-    toggleExecutorVisible,
-    modifyCode,
-    execTestcases
-  } = useModel('useInterviewModel', model =>
-    pick(model, 'setupExam', 'workingExam', 'executorVisible', 'toggleExecutorVisible', 'modifyCode', 'execTestcases')
+  const { setupExam, workingExam, executorVisible, toggleExecutorVisible } = useModel('useInterviewModel', model =>
+    pick(model, 'setupExam', 'workingExam', 'executorVisible', 'toggleExecutorVisible')
   )
 
   const containerHeight = useMemo(() => height! - 64 - 10, [height])
 
-  const params: { id?: string } = useParams()
+  const params: { examId?: string } = useParams()
 
   useEffect(() => {
-    return setupExam(params.id!)
+    return setupExam(params.examId!)
   }, [setupExam, params])
 
   useEffect(() => {
@@ -47,15 +40,8 @@ function Exam() {
   return (
     <div className={styles.content} style={{ height: containerHeight }}>
       <Button shape="circle" icon={<EyeOutlined />} className={styles.verifyBtn} onClick={toggleExecutorVisible} />
-      <CodeEditor onCodeChange={modifyCode} code={workingExam.code} />
-      {executorVisible && (
-        <TestcaseExecutor
-          height={containerHeight}
-          testcases={workingExam.testcases}
-          onCloseExecutor={toggleExecutorVisible}
-          execTestcases={execTestcases}
-        />
-      )}
+      <CodeEditor />
+      {executorVisible && <TestcaseExecutor height={containerHeight} />}
     </div>
   )
 }
