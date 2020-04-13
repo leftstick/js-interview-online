@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([[14],{l8kl:function(n,a,r){"use strict";r.r(a),a["default"]="/**\n *\n *  \u8f93\u5165\uff1a arr: [1, [2, [3 ,4], 5], 6]\n *\n *  \u8f93\u51fa\uff1a\u4e00\u4e2a\u6241\u5e73\u5316\u540e\u7684array\uff0c\u4f8b\u5982\uff1a[1, 2, 3 ,4, 5, 6]\n *\n **/\nfunction flatten(arr) {\n  //\u5728\u8fd9\u91cc\u5b9e\u73b0\n}\n"}}]);
