@@ -21,6 +21,26 @@ interface ICodeExecutorProps {
   execTestcases: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
 }
 
+const ReadOnlyEditor = React.memo(function({ height, value }: { height: number; value: string }) {
+  console.count('ReadOnlyEditor')
+  return (
+    <AceEditor
+      style={{ backgroundColor: '#edeced' }}
+      width="100%"
+      height={`${height}px`}
+      mode="javascript"
+      theme="tomorrow"
+      showGutter={false}
+      fontSize={14}
+      readOnly={true}
+      value={value}
+      editorProps={{
+        $blockScrolling: Infinity
+      }}
+    />
+  )
+})
+
 export default ({ height, testcases, onCloseExecutor, execTestcases }: ICodeExecutorProps) => {
   return (
     <div className={styles.container} style={{ height }}>
@@ -39,20 +59,7 @@ export default ({ height, testcases, onCloseExecutor, execTestcases }: ICodeExec
               style={{ height: `${lenHeight + 20}px` }}
             >
               <Spin spinning={status === CASE_STATUS.EXECUTING} className={styles.spinning} />
-              <AceEditor
-                style={{ backgroundColor: '#edeced' }}
-                width="100%"
-                height={`${lenHeight}px`}
-                mode="javascript"
-                theme="tomorrow"
-                showGutter={false}
-                fontSize={14}
-                readOnly={true}
-                value={content}
-                editorProps={{
-                  $blockScrolling: Infinity
-                }}
-              />
+              <ReadOnlyEditor height={lenHeight} value={content} />
             </div>
           )
         })}

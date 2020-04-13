@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 
 import AceEditor from 'react-ace'
 import 'ace-builds/webpack-resolver'
@@ -12,34 +12,32 @@ interface IEditorProps {
   code: string
 }
 
-export default ({ onCodeChange, code }: IEditorProps) => {
-  const editor = useMemo(() => {
-    console.log('code editor')
-    return (
-      <AceEditor
-        width="100%"
-        height="100%"
-        mode="javascript"
-        theme="tomorrow"
-        fontSize={14}
-        onChange={onCodeChange}
-        showPrintMargin={true}
-        showGutter={true}
-        highlightActiveLine={true}
-        value={code}
-        setOptions={{
-          enableBasicAutocompletion: true,
-          enableLiveAutocompletion: true,
-          enableSnippets: true,
-          showLineNumbers: true,
-          tabSize: 2
-        }}
-        editorProps={{
-          $blockScrolling: Infinity
-        }}
-      />
-    )
-  }, [onCodeChange, code])
-
-  return editor
+function CodeEditor({ onCodeChange, code }: IEditorProps) {
+  console.log('code editor')
+  return (
+    <AceEditor
+      width="100%"
+      height="100%"
+      mode="javascript"
+      theme="tomorrow"
+      fontSize={14}
+      onChange={onCodeChange}
+      showPrintMargin={true}
+      showGutter={true}
+      highlightActiveLine={true}
+      value={code}
+      setOptions={{
+        enableBasicAutocompletion: true,
+        enableLiveAutocompletion: true,
+        enableSnippets: true,
+        showLineNumbers: true,
+        tabSize: 2
+      }}
+      editorProps={{
+        $blockScrolling: Infinity
+      }}
+    />
+  )
 }
+
+export default React.memo(CodeEditor)
