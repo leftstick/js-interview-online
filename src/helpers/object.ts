@@ -7,8 +7,7 @@ export function removeComments(code: string) {
 }
 
 export function reflectFunctionName(code: string) {
-  const matched = code.match(/function\s*([a-zA-Z_][a-zA-Z_0-1]*).*/)
-  return matched ? matched[1] : ''
+  return code.match(/function\s*([a-zA-Z_][a-zA-Z_0-1]*).*/)?.[1]
 }
 
 export function reflectFunctionFromText(code: string) {
