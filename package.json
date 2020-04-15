@@ -16,7 +16,7 @@
     }
   },
   "lint-staged": {
-    "*.js": "eslint --max-warnings=0"
+    "*.ts": "eslint --max-warnings=0"
   },
   "commitlint": {
     "extends": [
