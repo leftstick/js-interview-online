@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { Button, Spin } from 'antd'
 import { useModel, useParams } from 'umi'
 import { EyeOutlined } from '@ant-design/icons'
+import { useSize } from '@umijs/hooks'
 
 import { pick, isEmpty } from '@/helpers'
 
@@ -12,6 +13,8 @@ import styles from './index.less'
 
 function Exam() {
   const { height, sayHi } = useModel('useAppModel', app => pick(app, 'height', 'sayHi'))
+  const contentRef = useRef(null)
+  const [{ width }] = useSize(contentRef.current)
 
   const { setupExam, workingExam, executorVisible, toggleExecutorVisible } = useModel('useInterviewModel', model =>
     pick(model, 'setupExam', 'workingExam', 'executorVisible', 'toggleExecutorVisible')
@@ -38,10 +41,10 @@ function Exam() {
   }
 
   return (
-    <div className={styles.content} style={{ height: containerHeight }}>
+    <div ref={contentRef} className={styles.content} style={{ height: containerHeight }}>
       <Button shape="circle" icon={<EyeOutlined />} className={styles.verifyBtn} onClick={toggleExecutorVisible} />
       <CodeEditor />
-      {executorVisible && <TestcaseExecutor height={containerHeight} />}
+      {executorVisible && <TestcaseExecutor height={containerHeight} maxWidth={width} />}
     </div>
   )
 }

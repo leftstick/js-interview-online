@@ -28,6 +28,8 @@
     "assert": "^2.0.0",
     "classnames": "^2.2.6",
     "lodash": "^4.17.15",
+    "prism-react-renderer": "^1.1.0",
+    "re-resizable": "^6.3.2",
     "react-ace": "^8.1.0"
   },
   "devDependencies": {
@@ -35,11 +37,11 @@
     "@commitlint/config-conventional": "^8.3.4",
     "@types/classnames": "^2.2.10",
     "@umijs/plugin-antd": "^0.5.1",
-    "@umijs/plugin-model": "^2.3.0",
+    "@umijs/plugin-model": "^2.3.1",
     "gh-pages": "^2.2.0",
     "husky": "^4.2.5",
-    "lint-staged": "^10.1.7",
+    "lint-staged": "^10.2.2",
     "react-coding-style": "^1.0.0",
-    "umi": "^3.1.2"
+    "umi": "^3.1.4"
   }
 }

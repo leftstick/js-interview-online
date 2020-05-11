@@ -1,27 +1,25 @@
 import React from 'react'
-import AceEditor from 'react-ace'
-import 'ace-builds/webpack-resolver'
-import 'ace-builds/src-noconflict/mode-javascript'
-import 'ace-builds/src-noconflict/theme-tomorrow'
-import 'ace-builds/src-noconflict/ext-language_tools'
-import 'ace-builds/src-noconflict/snippets/javascript'
+import Highlight, { defaultProps } from 'prism-react-renderer'
+import theme from 'prism-react-renderer/themes/duotoneLight'
 
 export default React.memo(function({ height, value }: { height: number; value: string }) {
   console.count('ReadOnlyEditor')
   return (
-    <AceEditor
-      style={{ backgroundColor: '#edeced' }}
-      width="100%"
-      height={`${height}px`}
-      mode="javascript"
-      theme="tomorrow"
-      showGutter={false}
-      fontSize={14}
-      readOnly={true}
-      value={value}
-      editorProps={{
-        $blockScrolling: Infinity
-      }}
-    />
+    <Highlight {...defaultProps} code={value} language="javascript" theme={theme}>
+      {({ className, style, tokens, getLineProps, getTokenProps }) => (
+        <pre
+          className={className}
+          style={{ ...style, width: '100%', height, marginBottom: 0, padding: '5px 5px 15px 5px' }}
+        >
+          {tokens.map((line, i) => (
+            <div {...getLineProps({ line, key: i })}>
+              {line.map((token, key) => (
+                <span {...getTokenProps({ token, key })} />
+              ))}
+            </div>
+          ))}
+        </pre>
+      )}
+    </Highlight>
   )
 })
