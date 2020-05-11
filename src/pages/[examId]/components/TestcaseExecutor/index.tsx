@@ -18,8 +18,6 @@ export default ({ maxWidth, height }: { maxWidth: number; height: number }) => {
 
   const { testcases } = workingExam!
 
-  console.log('maxWidth', maxWidth)
-
   return (
     <Resizable
       className={styles.container}
