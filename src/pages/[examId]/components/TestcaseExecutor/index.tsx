@@ -5,7 +5,7 @@ import { useModel } from 'umi'
 import { CloseOutlined, RightOutlined } from '@ant-design/icons'
 import classnames from 'classnames'
 
-import { ReadOnlyEditor } from '@/components'
+import { CodeSnippet } from '@/components'
 import { pick } from '@/helpers'
 import { CASE_STATUS } from '@/types'
 
@@ -53,7 +53,7 @@ export default ({ maxWidth, height }: { maxWidth: number; height: number }) => {
               style={{ height: `${lenHeight + 10}px` }}
             >
               <Spin spinning={status === CASE_STATUS.EXECUTING} className={styles.spinning} />
-              <ReadOnlyEditor height={lenHeight} value={content} />
+              <CodeSnippet height={lenHeight} value={content} />
             </div>
           )
         })}

@@ -1,3 +1,3 @@
 export { default as MenuFoldButton } from './MenuFoldButton'
-export { default as ReadOnlyEditor } from './ReadOnlyEditor'
+export { default as CodeSnippet } from './CodeSnippet'
 export { default as ControlledEditor } from './ControlledEditor'
