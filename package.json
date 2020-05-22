@@ -28,8 +28,8 @@
     "assert": "^2.0.0",
     "classnames": "^2.2.6",
     "lodash": "^4.17.15",
-    "prism-react-renderer": "^1.1.0",
-    "re-resizable": "^6.3.2",
+    "prism-react-renderer": "^1.1.1",
+    "re-resizable": "^6.4.0",
     "react-ace": "^8.1.0"
   },
   "devDependencies": {
@@ -40,8 +40,8 @@
     "@umijs/plugin-model": "^2.3.1",
     "gh-pages": "^2.2.0",
     "husky": "^4.2.5",
-    "lint-staged": "^10.2.2",
+    "lint-staged": "^10.2.4",
     "react-coding-style": "^1.0.0",
-    "umi": "^3.1.4"
+    "umi": "^3.2.2"
   }
 }
