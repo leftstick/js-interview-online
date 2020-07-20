@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react'
-import { useSize, useLocalStorageState } from '@umijs/hooks'
+import { useSize, useLocalStorageState } from 'ahooks'
 import { Modal } from 'antd'
 
-export default function() {
-  const [{ width, height }] = useSize(document.body)
+export default function () {
+  const { width, height } = useSize(document.body)
   const [sidebarCollapsed, setSidebarCollapsed] = useLocalStorageState('sidebar-collapsed', false)
 
   const sayHi = useCallback(() => {
@@ -16,7 +16,7 @@ export default function() {
           <img src="/js-interview-online/fight.gif" alt="" style={{ width: '265px' }} />
         </React.Fragment>
       ),
-      okText: '好'
+      okText: '好',
     })
 
     return () => {
@@ -25,7 +25,7 @@ export default function() {
   }, [])
 
   const toggleSidebar = useCallback(() => {
-    setSidebarCollapsed(s => !s)
+    setSidebarCollapsed((s) => !s)
   }, [setSidebarCollapsed])
 
   return {
@@ -33,6 +33,6 @@ export default function() {
     height,
     sayHi,
     sidebarCollapsed,
-    toggleSidebar
+    toggleSidebar,
   }
 }

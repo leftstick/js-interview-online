@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef } from 'react'
 import { Button, Spin } from 'antd'
 import { useModel, useParams } from 'umi'
 import { EyeOutlined } from '@ant-design/icons'
-import { useSize } from '@umijs/hooks'
+import { useSize } from 'ahooks'
 
 import { pick, isEmpty } from '@/helpers'
 
@@ -12,11 +12,11 @@ import TestcaseExecutor from './components/TestcaseExecutor'
 import styles from './index.less'
 
 function Exam() {
-  const { height, sayHi } = useModel('useAppModel', app => pick(app, 'height', 'sayHi'))
+  const { height, sayHi } = useModel('useAppModel', (app) => pick(app, 'height', 'sayHi'))
   const contentRef = useRef(null)
-  const [{ width }] = useSize(contentRef.current)
+  const { width } = useSize(contentRef.current)
 
-  const { setupExam, workingExam, executorVisible, toggleExecutorVisible } = useModel('useInterviewModel', model =>
+  const { setupExam, workingExam, executorVisible, toggleExecutorVisible } = useModel('useInterviewModel', (model) =>
     pick(model, 'setupExam', 'workingExam', 'executorVisible', 'toggleExecutorVisible')
   )
 
