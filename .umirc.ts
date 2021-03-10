@@ -3,9 +3,10 @@ import { defineConfig } from 'umi'
 export default defineConfig({
   hash: true,
   history: {
-    type: 'hash'
+    type: 'hash',
   },
   publicPath: '/js-interview-online/',
   favicon: '/js-interview-online/favicon.png',
-  dynamicImport: {}
+  dynamicImport: {},
+  webpack5: {},
 })
