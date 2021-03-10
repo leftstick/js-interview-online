@@ -7,7 +7,8 @@
     "build": "umi build",
     "serve": "node ./server/index.js",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "prepare": "husky install"
   },
   "lint-staged": {
     "*.tsx?": "eslint --max-warnings=0"
