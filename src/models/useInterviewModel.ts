@@ -14,21 +14,21 @@ export default function useInterviewModel() {
   const [rawTestcases, setTawTestcases] = useState<string[]>()
   const [executorVisible, setExecutorVisible] = useState<boolean>(false)
 
-  const matchExam = useCallback((pathname: string) => rawExams.some(e => `/${e.id}` === pathname), [])
+  const matchExam = useCallback((pathname: string) => rawExams.some((e) => `/coding/${e.id}` === pathname), [])
 
   const setupExam = useCallback(
     (examId: string) => {
-      const exam = rawExams.find(e => e.id === examId)
+      const exam = rawExams.find((e) => e.id === examId)
       Promise.all([exam!.getExamInitial(), exam!.getTestcases()]).then(([i, t]) => {
         setWorkingExam({
           id: exam!.id,
           title: exam!.title,
           contentRegexp: exam!.contentRegexp,
           code: sessionStorage.getItem(exam!.id) || i.default,
-          testcases: t.default.map(c => ({
+          testcases: t.default.map((c) => ({
             content: c,
-            status: CASE_STATUS.NOT_EXECUTED
-          }))
+            status: CASE_STATUS.NOT_EXECUTED,
+          })),
         })
         setTawTestcases(t.default)
       })
@@ -43,7 +43,7 @@ export default function useInterviewModel() {
   )
 
   const toggleExecutorVisible = useCallback(() => {
-    setExecutorVisible(v => !v)
+    setExecutorVisible((v) => !v)
   }, [setExecutorVisible])
 
   const checkCode = useCallback(
@@ -59,13 +59,13 @@ export default function useInterviewModel() {
 
   const modifyCode = useCallback(
     (code: string) => {
-      setWorkingExam(exam => {
+      setWorkingExam((exam) => {
         sessionStorage.setItem(exam!.id, code)
         checkCode(code, exam!)
         return {
           ...exam!,
-          testcases: exam!.testcases.map(c => ({ content: c.content, status: CASE_STATUS.NOT_EXECUTED })),
-          code
+          testcases: exam!.testcases.map((c) => ({ content: c.content, status: CASE_STATUS.NOT_EXECUTED })),
+          code,
         }
       })
     },
@@ -74,18 +74,18 @@ export default function useInterviewModel() {
 
   const changeTestcaseStatus = useCallback(
     (content, status: CASE_STATUS) => {
-      setWorkingExam(exam => {
+      setWorkingExam((exam) => {
         return {
           ...exam!,
-          testcases: exam!.testcases.map(c => {
+          testcases: exam!.testcases.map((c) => {
             if (content === c.content) {
               return {
                 content,
-                status
+                status,
               }
             }
             return c
-          })
+          }),
         }
       })
     },
@@ -96,10 +96,10 @@ export default function useInterviewModel() {
   const currentFuncName = useMemo(() => workingExam && reflectFunctionName(workingExam.code), [workingExam])
 
   const execTestcase = useCallback(
-    testcase => {
+    (testcase) => {
       changeTestcaseStatus(testcase, CASE_STATUS.EXECUTING)
 
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         setTimeout(() => {
           const isTestcaseAsync = /done\(/.test(testcase)
           let testcaseExecFunc = null
@@ -154,10 +154,10 @@ export default function useInterviewModel() {
 
   const execTestcases = useCallback(() => {
     delay(() => {
-      setWorkingExam(exam => {
+      setWorkingExam((exam) => {
         return {
           ...exam!,
-          testcases: exam!.testcases.map(c => ({ content: c.content, status: CASE_STATUS.NOT_EXECUTED }))
+          testcases: exam!.testcases.map((c) => ({ content: c.content, status: CASE_STATUS.NOT_EXECUTED })),
         }
       })
       return Promise.resolve()
@@ -177,6 +177,6 @@ export default function useInterviewModel() {
     modifyCode,
     executorVisible,
     toggleExecutorVisible,
-    execTestcases
+    execTestcases,
   }
 }
