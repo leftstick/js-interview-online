@@ -8,8 +8,8 @@ import { MenuFoldButton } from '@/components'
 import styles from './index.less'
 
 export default ({ location, children }: IRouteComponentProps) => {
-  const { width, sidebarCollapsed, toggleSidebar } = useModel('useAppModel', (model) =>
-    pick(model, 'width', 'sidebarCollapsed', 'toggleSidebar')
+  const { width, sidebarCollapsed, toggleSidebar, sayHi } = useModel('useAppModel', (model) =>
+    pick(model, 'width', 'sidebarCollapsed', 'toggleSidebar', 'sayHi')
   )
   const { matchExam } = useModel('useInterviewModel', (model) => pick(model, 'matchExam'))
   const { pathname } = location
@@ -18,11 +18,13 @@ export default ({ location, children }: IRouteComponentProps) => {
     destoryGlobalSpinner()
   }, [])
 
+  useEffect(() => {
+    sayHi()
+  }, [sayHi])
+
   if (width! < 1000) {
     return <div className={styles.warning}>本测验不适合在小屏环境下使用，请用大屏幕打开</div>
   }
-
-  console.log('pathname', pathname)
 
   if (!matchExam(pathname) && pathname !== '/drawing') {
     return (

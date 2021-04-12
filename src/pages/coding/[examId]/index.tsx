@@ -12,9 +12,7 @@ import TestcaseExecutor from './components/TestcaseExecutor'
 import styles from './index.less'
 
 function Exam() {
-  const { height, sayHi, sidebarCollapsed } = useModel('useAppModel', (app) =>
-    pick(app, 'height', 'sayHi', 'sidebarCollapsed')
-  )
+  const { height, sidebarCollapsed } = useModel('useAppModel', (app) => pick(app, 'height', 'sidebarCollapsed'))
   const contentRef = useRef(null)
   const { width } = useSize(contentRef.current)
   const { pathname } = useLocation()
@@ -31,10 +29,6 @@ function Exam() {
   useEffect(() => {
     return setupExam(params.examId!)
   }, [setupExam, params])
-
-  useEffect(() => {
-    return sayHi()
-  }, [sayHi])
 
   if (isEmpty(workingExam)) {
     return (
