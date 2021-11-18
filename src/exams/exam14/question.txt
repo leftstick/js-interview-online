@@ -1,0 +1,15 @@
+/**
+ *
+ *  requirement：
+ *
+ *  const obj = { selector: { to: { coupang: "FE Coder"} }, target: [1, 2, { name: 'PangPang'}] }
+ *  const path = 'selector.to.coupang'
+ *
+ *  const val = getByPath(obj, path)
+ *
+ *  console.log(val) // FE Coder
+ *
+ **/
+function getByPath(obj, path) {
+  // type here
+}

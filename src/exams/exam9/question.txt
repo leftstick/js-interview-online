@@ -1,28 +1,22 @@
 /**
  *
- *  尝试完成如下功能：
+ *  requirement：
  *
- * const app = new DI();
+ *  interface TreeNode {
+ *    value: any
+ *    left?: TreeNode
+ *    right?: TreeNode
+ *  }
  *
- * app.register('duck', {
- *   fly() {
- *     return 'fuck flying'
- *   }
- * })
+ *  get depth，for example: the depth of below tree is 3
  *
- * app.run(['duck', function(duck){
- *   console.log(duck.fly()) //fuck flying
- * }])
- *
+ *       3
+ *      / \
+ *      9  20
+ *        /  \
+ *      15   7
  *
  **/
-class DI {
-
-  register(name, instance) {
-    // 这里实现
-  }
-
-  run(arr) {
-    // 这里实现
-  }
+function maxDepth(treeNode) {
+  // type here
 }

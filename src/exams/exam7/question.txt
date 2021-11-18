@@ -1,11 +1,11 @@
 
 /**
  *
- *  尝试完成如下功能：
+ *  requirement：
  *
  *  const say = function(name, words, callback){
  *    setTimeout(function(){
- *      callback({ status: 'FINISHED' })
+ *      callback(undefined, { status: 'FINISHED' })
  *    })
  *  }
  *
@@ -18,5 +18,5 @@
  *
  **/
 function thunkify(func) {
-    //在这里实现
+  // type here
 }

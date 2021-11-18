@@ -1,16 +1,16 @@
 /**
  *
- *  尝试完成如下功能：
+ *  requirement：
  *
- *  console.log(camelcase('HELLO WORLD')); // helloWorld
+ *  console.log(camelcase('HELLO WORLD')) // helloWorld
  *
- *  console.log(camelcase('HELLO         WORLD')); // helloWorld
+ *  console.log(camelcase('HELLO         WORLD')) // helloWorld
  *
- *  console.log(camelcase('drunkman')); // drunkman
+ *  console.log(camelcase('drunkman')) // drunkman
  *
- *  console.log(camelcase('hi----you')); // hiYou
+ *  console.log(camelcase('hi----you')) // hiYou
  *
  **/
 function camelcase(str) {
-    //在这里实现
+  // type here
 }

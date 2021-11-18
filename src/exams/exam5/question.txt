@@ -1,19 +1,18 @@
 /**
  *
- *  尝试完成如下功能：
+ *  requirement：
  *
- *  const what = 'The fuck!';
+ *  const what = 'is this!';
  *
- *  value(what) === 'The fuck!'
+ *  value(what) === 'is this!'
  *
  *  const hello = function() {
- *      return 'world';
- *  };
+ *      return 'world'
+ *  }
  *
  * value(hello) === 'world'
  *
- *
  **/
 function value(anything) {
-    //在这里实现
+  // type here
 }

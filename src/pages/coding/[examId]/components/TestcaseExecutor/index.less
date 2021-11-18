@@ -1,0 +1,64 @@
+.container {
+  width: 600px;
+  position: absolute;
+  padding: 35px 5px 5px 11px;
+  top: 0;
+  right: 0;
+  z-index: 11;
+  background-color: #fff;
+  box-shadow: -3px 0px 2px rgb(212, 212, 212);
+}
+
+.innerContainer {
+  overflow-y: auto;
+}
+
+.closeBtn {
+  position: absolute;
+  cursor: pointer;
+  font-size: 18px;
+  top: 5px;
+  left: 10px;
+  color: rgb(161, 159, 159);
+}
+
+.closeBtn:hover {
+  color: rgb(122, 122, 255);
+}
+
+.runBtn {
+  position: absolute;
+  cursor: pointer;
+  font-size: 19px;
+  top: 5px;
+  left: 35px;
+  color: rgb(68, 247, 68);
+}
+
+.caseContainer {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-shrink: 0;
+  background-color: #edeced;
+  margin-top: 15px;
+}
+
+.execFailed {
+  border: 1px solid red;
+}
+
+.execSuccess {
+  border: 1px solid rgb(76, 248, 76);
+}
+
+.spinning {
+  position: absolute;
+  top: 50%;
+  margin-top: -20px;
+  left: 50%;
+  margin-left: -15px;
+  z-index: 10;
+}
