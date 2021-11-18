@@ -1,1 +1,0 @@
-(self["webpackChunkjs_interview_online"]=self["webpackChunkjs_interview_online"]||[]).push([[866],{46076:(e,n,t)=>{"use strict";t.r(n),t.d(n,{default:()=>i});var a=t(67294),s=t(44469);const i=()=>a.createElement(s.l_,{to:{pathname:"/exam1"}})}}]);

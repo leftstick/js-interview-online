@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([[3],{QeBL:function(e,a,n){"use strict";n.r(a);var t=n("q1tI"),o=n.n(t),c=n("Ty5D");a["default"]=()=>o.a.createElement(c["a"],{to:{pathname:"/coding/exam1"}})}}]);
